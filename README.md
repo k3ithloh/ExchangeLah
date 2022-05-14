@@ -47,6 +47,12 @@ git checkout -b <branch name>
 git push origin <branch name>
 ```
 
+## Change branch
+
+```sh
+git checkout <branch name>
+```
+
 ## Commit and push to Github
 
 ```sh
