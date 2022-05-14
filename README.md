@@ -1,14 +1,10 @@
 # ExchangeLah
 
-This template should help get you started developing with Vue 3 in Vite.
+University Exchange for Students!
 
-## Recommended IDE Setup
+## Requirement
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Node 16.15.0
 
 ## Project Setup
 
@@ -16,13 +12,13 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Local Development
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Production Development
 
 ```sh
 npm run build
@@ -33,4 +29,7 @@ npm run build
 ```sh
 npm run lint
 ```
-# ExchangeLah
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
