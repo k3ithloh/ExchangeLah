@@ -6,6 +6,17 @@ University Exchange for Students!
 
 - Node 16.15.0
 
+## Getting Started
+
+This guide outline the steps needed to start ExchangeLah in a development environment.
+
+- Fork the ExchangeLah-SG/ExchangeLah repository on Github under your username. You’ll end up with something like your_user_name/ExchangeLah.
+- Clone your forked repository on your development machine.
+
+```sh
+git clone https://github.com/ExchangeLah-SG/ExchangeLah.git
+```
+
 ## Project Setup
 
 ```sh
