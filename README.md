@@ -16,6 +16,8 @@ This guide outline the steps needed to start ExchangeLah in a development enviro
 git clone https://github.com/ExchangeLah-SG/ExchangeLah.git
 ```
 
+- Download dependencies and packages
+
 ```sh
 npm install
 ```
