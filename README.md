@@ -40,6 +40,21 @@ npm run build
 npm run lint
 ```
 
+## Create new branch and change to the new branch
+
+```sh
+git checkout -b <branch name>
+git push origin <branch name>
+```
+
+## Commit and push to Github
+
+```sh
+git add .
+git commit -m "<commit name>"
+git push origin <branch name>
+```
+
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
