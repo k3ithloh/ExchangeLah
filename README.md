@@ -10,15 +10,15 @@ University Exchange for Students!
 
 This guide outline the steps needed to start ExchangeLah in a development environment.
 
-- Clone the repository on your development machine.
+- Read the detailed guide here!
+
+[https://exchangelah.atlassian.net/wiki/spaces/EXCHANGELA/pages/524289/Git+Guide+Feature+Branch+Workflow]
+
+Clone Repository on local machine and download dependencies
 
 ```sh
 git clone https://github.com/ExchangeLah-SG/ExchangeLah.git
-```
-
-- Download dependencies and packages
-
-```sh
+cd ExchangeLah
 npm install
 ```
 
