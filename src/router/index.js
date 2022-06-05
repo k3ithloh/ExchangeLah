@@ -4,18 +4,18 @@ export const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      name: "home",
       path: "/",
+      name: "Home",
       component: import("../views/Home.vue"),
     },
     {
-      name: "login",
       path: "/login",
+      name: "Login",
       component: import("../views/Login.vue"),
     },
     {
-      name: "signup",
       path: "/signup",
+      name: "SignUp",
       component: import("../views/SignUp.vue"),
     },
     {
