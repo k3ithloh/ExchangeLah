@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "signup",
+  name: "SignUp",
   components: {},
 };
 </script>
