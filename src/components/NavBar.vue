@@ -2,7 +2,7 @@
 
   <div class="p-6 flex bg-blue-50 justify-between">
     <div class="flex bg-blue-50">
-      <img src="src/assets/img/logo.png" class="object-cover h-20 w-100">
+      <img src="src/assets/img/exchangeLah.png" class="object-cover h-20 w-100">
     </div>
     <div class="flex bg-blue-50 justify-centre flex-col " >
       <div class="flex justify-center ">
