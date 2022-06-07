@@ -1,16 +1,16 @@
 <template>
-  <div class="p-6 flex bg-blue-50 justify-between">
-    <div class="flex bg-blue-50">
+  <div class="p-6 flex bg-slate-100 justify-between">
+    <div class="flex bg-slate-100">
       <img
         src="../../src/assets/img/exchangeLah.png"
         class="object-cover h-20 w-100"
       />
     </div>
-    <div class="flex bg-blue-50 justify-centre flex-col">
+    <div class="flex bg-slate-100 justify-centre flex-col">
       <div class="flex justify-center">
-        <input class="" type="text" placeholder="Search.." />
+        <input class="" type="text" placeholder="Search" />
       </div>
-      <div class="flex">
+      <div class="flex mt-3">
         <router-link to="/">
           <div
             class="text-black font-bold py-2 px-4 rounded flex flex-col items-center"
@@ -47,9 +47,17 @@
         </router-link>
       </div>
     </div>
-    <div class="flex bg-blue-50">
-      <router-link to="/login" class="px-2 underline">Log in</router-link>
-      <router-link to="/signup" class="px-2 underline">Sign Up</router-link>
+    <div class="flex bg-slate-100">
+      <router-link
+        to="/login"
+        class="px-2 text-[#2D3D8F] underline underline-offset-4"
+        >Log in</router-link
+      >
+      <router-link
+        to="/signup"
+        class="px-2 text-[#2D3D8F] underline underline-offset-4"
+        >Sign Up</router-link
+      >
     </div>
   </div>
 </template>
