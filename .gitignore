@@ -30,3 +30,5 @@ coverage
 # local env files
 .env.local
 .env.*.local
+# Local Netlify folder
+.netlify
