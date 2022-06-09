@@ -36,7 +36,7 @@
         </router-link>
       </div>
     </div>
-    <div class="flex bg-blue-50 ">
+    <div class="flex bg-blue-50">
       <router-link to="/login" class="px-2 underline">Log in</router-link>
       <router-link to="/signup" class="px-2 underline">Sign Up</router-link>
     </div>
