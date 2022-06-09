@@ -9,6 +9,16 @@ export const router = createRouter({
       component: import("../views/Home.vue"),
     },
     {
+      path: "/universities",
+      name: "Universities",
+      component: import("../views/Universities.vue"),
+    },
+    {
+      path: "/modulemapping",
+      name: "ModuleMapping",
+      component: import("../views/ModuleMapping.vue"),
+    },
+    {
       path: "/login",
       name: "Login",
       component: import("../views/Login.vue"),
