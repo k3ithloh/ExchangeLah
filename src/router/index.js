@@ -5,8 +5,8 @@ export const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Home",
-      component: import("../views/Home.vue"),
+      name: "HomePage",
+      component: import("../views/HomePage.vue"),
     },
     {
       path: "/universities",
@@ -20,8 +20,8 @@ export const router = createRouter({
     },
     {
       path: "/login",
-      name: "Login",
-      component: import("../views/Login.vue"),
+      name: "LoginPage",
+      component: import("../views/LoginPage.vue"),
     },
     {
       path: "/signup",

@@ -28,7 +28,7 @@
           class="text-xs font-light text-blue-800 hover:underline underline-offset-4"
         >
           <router-link to="/ForgotPassword">Forgot password?</router-link> </a
-        >&nbsp
+        >&nbsp;
 
         <a
           class="text-xs font-light text-blue-800 hover:underline underline-offset-4"
@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "LoginPage",
   components: {},
 };
 </script>
