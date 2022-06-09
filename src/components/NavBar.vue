@@ -2,7 +2,7 @@
   <div class="flex bg-slate-100 justify-between px-7 pt-3 items-center">
     <div class="flex justify-center items-center">
       <img
-        src="src/assets/img/exchangeLah.png"
+        src="../assets/img/exchangeLah.png"
         class="object-cover h-20 w-100"
       />
     </div>
