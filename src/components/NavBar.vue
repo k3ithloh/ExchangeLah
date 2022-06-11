@@ -1,79 +1,75 @@
 <template>
-  <div class="flex bg-slate-100 justify-between px-7 pt-3 items-center">
-    <div class="flex justify-center items-center">
-      <img
-        src="../assets/img/exchangeLah.png"
-        class="object-cover h-20 w-100"
+  <div class="bg-slate-100 px-7 pt-4 flex justify-between items-center">
+    <router-link to="/" class="">
+      <img src="../assets/img/logo.png" class="object-cover h-20 w-100" />
+    </router-link>
+    <form
+      class="border-[#D3D6E7] bg-slate-100 flex justify-center items-center flex-col relative"
+    >
+      <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+        <i class="fa-solid h-4 w-4 fa-magnifying-glass text-[#2D3D8F]"></i>
+      </span>
+      <input
+        class="placeholder:italic placeholder:text-slate-400 block bg-slate-100 w-96 border border-slate-300 rounded-md py-3 pl-10 pr-10 shadow-sm focus:outline-none sm:text-sm"
+        placeholder="Search university..."
+        @input="search"
+        type="text"
+        name="search"
       />
-    </div>
-    <div class="flex bg-slate-100 justify-center items-center flex-col">
-      <div
-        class="flex justify-center px-5 h-12 rounded border-2 border-[#D3D6E7]"
+      <button
+        type="reset"
+        class="absolute inset-y-0 right-0 flex items-center pr-3"
       >
-        <input
-          @input="search"
-          class="w-full bg-slate-100"
-          type="search"
-          placeholder="Search.."
-        />
-        <div class="flex justify-center items-center">
-          <i
-            class="fa-solid h-5 w-5 fa-magnifying-glass fa-2x text-[#2D3D8F]"
-          ></i>
-        </div>
-      </div>
-    </div>
-    <div class="flex bg-slate-100">
+        <i class="fa-solid h-4 w-4 fa-xmark text-[#2D3D8F]"></i>
+      </button>
+    </form>
+    <div class="bg-slate-100 flex items-center">
       <router-link
         to="/login"
-        class="px-2 font-semibold text-[#2D3D8F] hover:text-black"
-        >Log in</router-link
+        class="mx-2 font-semibold text-[#2D3D8F] hover:text-black"
       >
+        Login
+      </router-link>
       <router-link
         to="/signup"
-        class="px-2 font-semibold text-[#2D3D8F] hover:text-black"
-        >Sign Up</router-link
+        class="mx-2 font-semibold text-[#2D3D8F] hover:text-black"
       >
+        Sign Up
+      </router-link>
     </div>
   </div>
-  <div class="flex justify-center">
-    <router-link to="/">
-      <div class="p-4 flex flex-col items-center">
-        <i class="fa-solid fa-house fa-2x text-[#2D3D8F] h-7 w-7"></i>
-        <a href="#home" class="text-center pt-2 text-[#2D3D8F] font-bold"
-          >Home</a
-        >
+  <nav class="flex justify-center">
+    <router-link class="m-4" to="/">
+      <div class="flex flex-col items-center">
+        <i class="fa-solid fa-house text-[#2D3D8F] h-6 w-6 pb-2"></i>
+        <a href="#home" class="text-[#2D3D8F] font-semibold"> Home </a>
       </div>
     </router-link>
-    <router-link to="/universities">
-      <div class="p-4 flex flex-col items-center">
-        <i class="fa-solid fa-user-graduate fa-2x text-[#2D3D8F] h-7 w-7"></i>
-        <a
-          href="#universities"
-          class="text-center pt-2 text-[#2D3D8F] font-bold"
-          >Universities</a
-        >
+    <router-link class="m-4" to="/universities">
+      <div class="flex flex-col items-center">
+        <i class="fa-solid fa-user-graduate text-[#2D3D8F] h-6 w-6 pb-2"></i>
+        <a href="#universities" class="text-[#2D3D8F] font-semibold">
+          Universities
+        </a>
       </div>
     </router-link>
-    <router-link to="/modulemapping">
-      <div class="p-4 flex flex-col items-center">
-        <i class="fa-solid fa-diagram-project fa-2x text-[#2D3D8F] h-7 w-7"></i>
-        <a
-          href="#modulemapping"
-          class="text-center pt-2 text-[#2D3D8F] font-bold"
-          >Module Mapping</a
-        >
+    <router-link class="m-4" to="/modulemapping">
+      <div class="flex flex-col items-center">
+        <i class="fa-solid fa-diagram-project text-[#2D3D8F] h-6 w-6 pb-2"></i>
+        <a href="#modulemapping" class="text-[#2D3D8F] font-semibold">
+          Module Mapping
+        </a>
       </div>
     </router-link>
-    <router-link to="#community">
-      <div class="p-4 flex flex-col items-center">
-        <i class="fa-solid fa-comments fa-2x text-[#2D3D8F] h-7 w-7"></i>
-        <a href="#community" class="text-center pt-2 text-[#2D3D8F] font-bold"
-          >Community</a
-        >
+    <router-link class="m-4" to="#community">
+      <div class="flex flex-col items-center">
+        <i class="fa-solid fa-comments text-[#2D3D8F] h-6 w-6 pb-2"></i>
+        <a href="#community" class="text-[#2D3D8F] font-semibold">
+          Community
+        </a>
       </div>
     </router-link>
-  </div>
+  </nav>
 </template>
 
 <script>
