@@ -4,7 +4,9 @@
 
 <script>
 export default {
-  name: "Universities",
+  name: "UniversitiesPage",
   components: {},
 };
 </script>
+
+<style lang="scss" scoped></style>
