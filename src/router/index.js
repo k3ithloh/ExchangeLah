@@ -10,8 +10,8 @@ export const router = createRouter({
     },
     {
       path: "/universities",
-      name: "Universities",
-      component: import("../views/Universities.vue"),
+      name: "UniversitiesPage",
+      component: import("../views/UniversitiesPage.vue"),
     },
     {
       path: "/modulemapping",
