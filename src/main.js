@@ -5,5 +5,4 @@ import "./index.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 
-const app = createApp(App).use(router);
-app.mount("#app");
+createApp(App).use(router).mount("#app");

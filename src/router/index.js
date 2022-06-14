@@ -1,4 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
+import HomePage from "@/views/HomePage.vue";
+import UniversitiesPage from "@/views/UniversitiesPage.vue";
+import ModuleMapping from "@/views/ModuleMapping.vue";
+import LoginPage from "@/views/LoginPage.vue";
+import SignUp from "@/views/SignUp.vue";
+import ForgotPassword from "@/views/ForgotPassword.vue";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -6,32 +12,32 @@ export const router = createRouter({
     {
       path: "/",
       name: "HomePage",
-      component: import("../views/HomePage.vue"),
+      component: HomePage,
     },
     {
       path: "/universities",
       name: "UniversitiesPage",
-      component: import("../views/UniversitiesPage.vue"),
+      component: UniversitiesPage,
     },
     {
       path: "/modulemapping",
       name: "ModuleMapping",
-      component: import("../views/ModuleMapping.vue"),
+      component: ModuleMapping,
     },
     {
       path: "/login",
       name: "LoginPage",
-      component: import("../views/LoginPage.vue"),
+      component: LoginPage,
     },
     {
       path: "/signup",
       name: "SignUp",
-      component: import("../views/SignUp.vue"),
+      component: SignUp,
     },
     {
       path: "/forgotpassword",
       name: "ForgotPassword",
-      component: import("../views/ForgotPassword.vue"),
+      component: ForgotPassword,
     },
   ],
 });
