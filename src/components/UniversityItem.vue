@@ -5,7 +5,7 @@
       alt="Tokyo University"
       class="h-40 w-40 rounded-md mb-2"
     />
-    <h4 class="font-semibold text-sm mb-1 overflow-clip">
+    <h4 class="font-semibold text-base mb-1 overflow-clip">
       {{ university.name }}
     </h4>
     <div class="flex items-center mb-1">
