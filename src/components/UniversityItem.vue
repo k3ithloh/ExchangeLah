@@ -1,11 +1,13 @@
 <template>
-  <div class="flex justify-center flex-col mb-5 mx-5">
+  <div
+    class="flex justify-center flex-col mb-5 mx-5 min-w-[200px] w-1/5 h-full"
+  >
     <img
       src="../assets/img/tokyo_university.jpeg"
       alt="Tokyo University"
-      class="h-40 w-40 rounded-md mb-2"
+      class="h-40 w-full rounded-md mb-2"
     />
-    <h4 class="font-semibold text-base mb-1 overflow-clip">
+    <h4 class="font-semibold text-base mb-1 line-clamp-2">
       {{ university.name }}
     </h4>
     <div class="flex items-center mb-1">
