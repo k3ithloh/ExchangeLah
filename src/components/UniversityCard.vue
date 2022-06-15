@@ -9,7 +9,9 @@
         class="h-12 w-12 mx-2"
       />
       <div class="flex flex-col">
-        <h5 class="text-sm font-semibold mb-1">{{ university.name }}</h5>
+        <h5 class="text-sm font-semibold mb-1 line-clamp-2">
+          {{ university.name }}
+        </h5>
         <span class="text-xs font-regular text-gray-400"
           >{{ university.city }}, {{ university.country }}</span
         >

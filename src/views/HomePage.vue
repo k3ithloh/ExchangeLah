@@ -2,7 +2,7 @@
   <div class="grid grid-cols-8 grid-rows-3 gap-4">
     <div class="col-span-6 row-span-3 bg-white rounded-xl pt-10 px-8">
       <h1 class="text-3xl font-semibold mb-8">Top Rated Universities</h1>
-      <div class="grid grid-cols-4">
+      <div class="flex flex-wrap">
         <UniversityItem
           v-for="university in universities"
           :key="university.id"
