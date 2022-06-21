@@ -1,8 +1,8 @@
 <template>
-  <div class="grid grid-cols-8 grid-rows-3 gap-4">
-    <div class="col-span-6 row-span-3 bg-white rounded-xl pt-10 px-8">
-      <h1 class="text-3xl font-semibold mb-8">Top Rated Universities</h1>
-      <div class="flex flex-wrap">
+  <div class="grid sm:grid-cols-8 sm:grid-rows-3 sm:gap-4 grid-cols-1 mx-4 ">
+    <div class="sm:col-span-6 sm:row-span-3 bg-white rounded-xl pt-10 px-8 box-border">
+      <h1 class="text-3xl font-semibold mb-8 text-center sm:text-left">Top Rated Universities</h1>
+      <div class="flex flex-wrap justify-center">
         <UniversityItem
           v-for="university in universities"
           :key="university.id"
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div
-      class="col-span-2 row-span-1 bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center"
+      class="sm:col-span-2 sm:row-span-1 bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px] "
     >
       <h1 class="font-semibold text-2xl text-center my-5">
         No idea where to go?
@@ -20,7 +20,7 @@
         <span class="font-medium text-base">Show Me</span>
       </router-link>
     </div>
-    <div class="col-span-2 row-span-2 bg-[#FAFAFA] rounded-xl">
+    <div class="sm:col-span-2 sm:row-span-2 bg-[#FAFAFA] rounded-xl">
       <h3 class="font-semibold text-xl text-center pt-5">
         Recommended for you
       </h3>

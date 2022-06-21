@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-center flex-col mb-5 mx-5 min-w-[200px] w-1/5 h-full"
+    class="flex justify-center flex-col mb-5 mx-5 min-w-[200px] w-1/3 sm:w-1/5 h-full"
   >
     <img
       src="../assets/img/tokyo_university.jpeg"

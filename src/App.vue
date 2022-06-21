@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-full py-4 px-7">
+  <div class="2xl:px-80 px">
     <NavBar />
     <router-view></router-view>
   </div>
