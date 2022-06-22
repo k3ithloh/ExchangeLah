@@ -127,21 +127,44 @@
       <!-- Add router link here or in the Card component? -->
       <div class="flex flex-wrap justify-center mt-4">
         <UniversityItem
-          v-for="university in universities"
+          v-for="university in display"
           :key="university.id"
           :university="university"
         />
       </div>
       <!-- Page Nav not working yet. Just copied something from web. Not sure how to make this changeable yet -->
+
       <div class="flex justify-end">
-        <VuePaginationTw
-          :total-items="20"
-          :current-page="1"
-          :per-page="8"
-          @page-changed="functionName"
-          :go-button="false"
-          styled="centered"
-        />
+        <div
+          v-for="i in pageCount"
+          :key="i">
+          <button
+            v-if="i===currentPage"
+            @click="displayPage(i)"
+            class="border-2 px-2 bg-blue-500">
+            {{ i }}
+          </button>
+          <button
+            v-else
+            @click="displayPage(i)"
+            class="border-2 px-2 bg-blue-300">
+            {{ i }}
+          </button>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+      <div class="flex justify-end">
+
       </div>
     </div>
   </div>
@@ -149,15 +172,36 @@
 
 <script>
 import UniversityItem from "@/components/UniversityItem.vue";
-import VuePaginationTw from "vue-pagination-tw";
+
 export default {
   props: [],
   name: "UniversitiesPage",
   components: {
     UniversityItem,
-    VuePaginationTw,
+  },
+
+  beforeMount() {
+    this.displayPage()
+    this.pageCounter()
   },
   methods: {
+    pageCounter: function () {
+      this.pageCount = Math.ceil(Object.keys(this.universities).length / this.uniPerPage)
+    },
+    displayPage: function (page) {
+      this.currentPage = page ? page : 1
+      this.display = [];
+      let counter = 1
+      let loopStart = this.uniPerPage * this.currentPage - this.uniPerPage + 1;
+      let keys = Object.keys(this.universities)
+      for (let i = 1; i <= Object.keys(this.universities).length; i++) {
+        if (i === loopStart && counter <= this.uniPerPage) {
+          this.display.push(this.universities[keys[i-1]])
+          loopStart++;
+          counter++;
+        }
+      }
+    },
     // Not sure how to make this sorting dropdown work
     sort: function () {
       var select = document.getElementById("sortBy");
@@ -226,6 +270,11 @@ export default {
   },
   data() {
     return {
+
+      display: "",
+      currentPage: 1,
+      uniPerPage: 4,
+      pageCount: 1,
       isLocationOpen: false,
       isPriceOpen: false,
       universities: {

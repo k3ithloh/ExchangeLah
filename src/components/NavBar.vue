@@ -1,7 +1,7 @@
 <template>
   <!-- MOBILE -->
   <div class="sm:hidden">
-    <div class="flex justify-end w-full">
+    <div class="flex justify-end w-full bg-blue-300">
       <button @click="navBar = !navBar" class="">
         <span v-if="navBar">
           <i class="fa-solid fa-grip-lines h-12 w-12"></i>
@@ -20,25 +20,25 @@
       leave-from-class="scale-y-100 opacity-100"
       leave-to-class="scale-y-50 opacity-0"
     >
-      <nav v-if="!navBar" class=" bg-blue-500 w-full absolute">
+      <nav v-if="!navBar" class=" bg-blue-300 w-full absolute text-[#2D3D8F]">
         <div class="flex justify-end">
           <router-link
             to="/login"
-            class="mx-2 font-semibold text-blue-100 hover:text-black"
+            class="mx-2 font-semibold hover:text-black"
             @click="navBar = !navBar"
           >
             Login
           </router-link>
           <router-link
             to="/signup"
-            class="mx-2 font-semibold text-blue-100 hover:text-black"
+            class="mx-2 font-semibold hover:text-black"
             @click="navBar = !navBar"
           >
             Sign Up
           </router-link>
         </div>
 
-        <div class="flex flex-col justify-center items-center py-5 text-blue-100">
+        <div class="flex flex-col justify-center items-center py-5 text-[#2D3D8F]">
           <router-link @click="navBar = !navBar" class="m-4" to="/">
             <div class="flex space-x-4 items-center ">
               <i class="fa-solid fa-house  h-6 w-6 pb-2"></i>
@@ -73,7 +73,7 @@
   </div>
   <!-- DESKTOP -->
 
-  <div class="flex flex-col justify-center items-center sm:flex-row sm:justify-between mx-4">
+  <div class="flex flex-col justify-center items-center sm:flex-row sm:justify-between mx-4 pt-4">
     <router-link to="/" class="">
       <img src="../assets/img/logo.png" class=" h-32" />
     </router-link>
@@ -82,7 +82,7 @@
         <i class="fa-solid h-4 w-4 fa-magnifying-glass text-[#2D3D8F]"></i>
       </span>
       <input
-        class="placeholder:italic placeholder:text-slate-400 block bg-slate-100 sm:w-96 py-3 pl-5 pr-5 "
+        class="placeholder:italic placeholder:text-slate-400 block bg-slate-100 sm:w-96 py-3 pl-5 pr-5"
         placeholder="Search university..."
         @input="search"
         type="text"
