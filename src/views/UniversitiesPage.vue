@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full grid grid-cols-[1fr_3fr] gap-4 rounded-xl">
+  <div class="h-full grid sm:grid-cols-[1fr_3fr] gap-4 rounded-xl">
     <div class="bg-white flex flex-col rounded-xl">
       <div class="flex justify-between p-2">
         <h3 class="font-semibold">Selected</h3>
@@ -38,12 +38,12 @@
           </span>
         </button>
         <transition
-          enter-active-class="transform transition duration-500 ease-custom"
-          enter-class="-translate-y-1/2 scale-y-0 opacity-0"
-          enter-to-class="translate-y-0 scale-y-100 opacity-100"
-          leave-active-class="transform transition duration-300 ease-custom"
-          leave-class="translate-y-0 scale-y-100 opacity-100"
-          leave-to-class="-translate-y-1/2 scale-y-0 opacity-0"
+          enter-active-class="duration-500 transform transition ease-in-out origin-top "
+          enter-from-class="scale-y-0 opacity-0"
+          enter-to-class="scale-y-100 opacity-100 "
+          leave-active-class="duration-200 transform ease-in-out origin-top"
+          leave-from-class="scale-y-100 opacity-100"
+          leave-to-class="scale-y-50 opacity-0"
         >
           <div
             v-if="isLocationOpen"
@@ -80,12 +80,12 @@
           </span>
         </button>
         <transition
-          enter-active-class="transform transition duration-500 ease-custom"
-          enter-class="-translate-y-1/2 scale-y-0 opacity-0"
-          enter-to-class="translate-y-0 scale-y-100 opacity-100"
-          leave-active-class="transform transition duration-300 ease-custom"
-          leave-class="translate-y-0 scale-y-100 opacity-100"
-          leave-to-class="-translate-y-1/2 scale-y-0 opacity-0"
+          enter-active-class="duration-500 transform transition ease-in-out origin-top "
+          enter-from-class="scale-y-0 opacity-0"
+          enter-to-class="scale-y-100 opacity-100 "
+          leave-active-class="duration-200 transform ease-in-out origin-top"
+          leave-from-class="scale-y-100 opacity-100"
+          leave-to-class="scale-y-50 opacity-0"
         >
           <div v-if="isPriceOpen" class="flex flex-col">
             <div
@@ -125,7 +125,7 @@
         </div>
       </div>
       <!-- Add router link here or in the Card component? -->
-      <div class="flex flex-wrap mt-4">
+      <div class="flex flex-wrap justify-center mt-4">
         <UniversityItem
           v-for="university in universities"
           :key="university.id"
