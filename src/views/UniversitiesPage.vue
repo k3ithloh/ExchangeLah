@@ -134,9 +134,12 @@
       </div>
       <!-- Page Nav not working yet. Just copied something from web. Not sure how to make this changeable yet -->
 
-      <div class="flex justify-end">
+      <div class="flex justify-end pb-4 pr-4">
+        <button @click="this.currentPage = 1;displayPage(this.currentPage)">
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
         <div
-          v-for="i in pageCount"
+          v-for="i in displayPages(this.currentPage)"
           :key="i">
           <button
             v-if="i===currentPage"
@@ -151,6 +154,9 @@
             {{ i }}
           </button>
         </div>
+        <button @click="this.currentPage = pageCount;displayPage(this.currentPage)">
+          <i class="fa-solid fa-angles-right"></i>
+        </button>
       </div>
 
 
@@ -160,12 +166,6 @@
 
 
 
-
-
-
-      <div class="flex justify-end">
-
-      </div>
     </div>
   </div>
 </template>
@@ -185,6 +185,25 @@ export default {
     this.pageCounter()
   },
   methods: {
+    displayPages: function (page) {
+      let numDisplay = []
+      if (page === 1) {
+        for (let i = page; i <= Math.min(page + 3, this.pageCount); i++){
+          numDisplay.push(i)
+        }
+      }
+      else if (page >= this.pageCount -1){
+        for (let i = Math.max(this.pageCount - 3, 1); i <= Math.min(page + 3, this.pageCount); i++){
+          numDisplay.push(i)
+        }
+      }
+      else {
+        for (let i = page-1; i <= Math.min(page + 2, this.pageCount); i++){
+          numDisplay.push(i)
+        }
+      }
+      return numDisplay
+    },
     pageCounter: function () {
       this.pageCount = Math.ceil(Object.keys(this.universities).length / this.uniPerPage)
     },
@@ -273,7 +292,7 @@ export default {
 
       display: "",
       currentPage: 1,
-      uniPerPage: 4,
+      uniPerPage: 1,
       pageCount: 1,
       isLocationOpen: false,
       isPriceOpen: false,
