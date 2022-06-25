@@ -1,6 +1,9 @@
 <template>
-  <div class="h-full grid sm:grid-cols-[1fr_3fr] gap-4 rounded-xl">
-    <div class="bg-white flex flex-col rounded-xl">
+  <div class="h-full grid sm:grid-cols-[1fr_2fr] gap-4 rounded-xl">
+    <div>
+
+    </div>
+    <div class="bg-white flex flex-col rounded-xl sm:h-3/4 sm:fixed sm:overflow-y-scroll sm:w-1/4 ">
       <div class="flex justify-between p-2">
         <h3 class="font-semibold">Selected</h3>
         <button @click="clearFilter()" class="text-xs">Clear</button>
@@ -107,7 +110,7 @@
       </div>
     </div>
     <!-- sorting not built yet -->
-    <div class="bg-white">
+    <div class="bg-white ">
       <div
         class="flex justify-between border-b-2 border-black text-4xl font-semibold p-4"
       >
@@ -133,40 +136,14 @@
         />
       </div>
       <!-- Page Nav not working yet. Just copied something from web. Not sure how to make this changeable yet -->
-
-      <div class="flex justify-end pb-4 pr-4">
-        <button @click="this.currentPage = 1;displayPage(this.currentPage)">
-          <i class="fa-solid fa-angles-left"></i>
-        </button>
-        <div
-          v-for="i in displayPages(this.currentPage)"
-          :key="i">
-          <button
-            v-if="i===currentPage"
-            @click="displayPage(i)"
-            class="border-2 px-2 bg-blue-500">
-            {{ i }}
-          </button>
-          <button
-            v-else
-            @click="displayPage(i)"
-            class="border-2 px-2 bg-blue-300">
-            {{ i }}
-          </button>
-        </div>
-        <button @click="this.currentPage = pageCount;displayPage(this.currentPage)">
-          <i class="fa-solid fa-angles-right"></i>
+      <div class="flex justify-center">
+        <button @click="displayMore()" class="rounded-2xl p-4 justify-end hover:bg-blue-300">
+          Load More
         </button>
       </div>
 
-
-
-
-
-
-
-
     </div>
+
   </div>
 </template>
 
@@ -182,43 +159,17 @@ export default {
 
   beforeMount() {
     this.displayPage()
-    this.pageCounter()
   },
   methods: {
-    displayPages: function (page) {
-      let numDisplay = []
-      if (page === 1) {
-        for (let i = page; i <= Math.min(page + 3, this.pageCount); i++){
-          numDisplay.push(i)
-        }
-      }
-      else if (page >= this.pageCount -1){
-        for (let i = Math.max(this.pageCount - 3, 1); i <= Math.min(page + 3, this.pageCount); i++){
-          numDisplay.push(i)
-        }
-      }
-      else {
-        for (let i = page-1; i <= Math.min(page + 2, this.pageCount); i++){
-          numDisplay.push(i)
-        }
-      }
-      return numDisplay
+    displayMore: function () {
+      this.startingCount += this.uniPerPage
+      this.displayPage()
     },
-    pageCounter: function () {
-      this.pageCount = Math.ceil(Object.keys(this.universities).length / this.uniPerPage)
-    },
-    displayPage: function (page) {
-      this.currentPage = page ? page : 1
+    displayPage: function () {
       this.display = [];
-      let counter = 1
-      let loopStart = this.uniPerPage * this.currentPage - this.uniPerPage + 1;
       let keys = Object.keys(this.universities)
-      for (let i = 1; i <= Object.keys(this.universities).length; i++) {
-        if (i === loopStart && counter <= this.uniPerPage) {
-          this.display.push(this.universities[keys[i-1]])
-          loopStart++;
-          counter++;
-        }
+      for (let i = 0; i < this.startingCount; i++) {
+        this.display.push(this.universities[keys[i]])
       }
     },
     // Not sure how to make this sorting dropdown work
@@ -289,11 +240,9 @@ export default {
   },
   data() {
     return {
-
-      display: "",
-      currentPage: 1,
-      uniPerPage: 1,
-      pageCount: 1,
+      display: [],
+      uniPerPage: 2,
+      startingCount: 2,
       isLocationOpen: false,
       isPriceOpen: false,
       universities: {
