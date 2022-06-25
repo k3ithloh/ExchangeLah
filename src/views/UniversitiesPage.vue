@@ -1,6 +1,6 @@
 <template>
   <div class="h-full grid sm:grid-cols-[1fr_2fr] gap-4 rounded-xl">
-    <div>
+    <div class="">
 
     </div>
     <div class="bg-white flex flex-col rounded-xl sm:h-3/4 sm:fixed sm:overflow-y-scroll sm:w-1/4 ">
