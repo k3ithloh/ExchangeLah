@@ -1,9 +1,9 @@
 <template>
   <div class="h-full grid sm:grid-cols-[1fr_2fr] gap-4 rounded-xl">
-    <div class="">
-
-    </div>
-    <div class="bg-white flex flex-col rounded-xl sm:h-3/4 sm:fixed sm:overflow-y-scroll sm:w-1/4 ">
+    <div class=""></div>
+    <div
+      class="bg-white flex flex-col rounded-xl sm:h-3/4 sm:fixed sm:overflow-y-scroll sm:w-1/4"
+    >
       <div class="flex justify-between p-2">
         <h3 class="font-semibold">Selected</h3>
         <button @click="clearFilter()" class="text-xs">Clear</button>
@@ -110,9 +110,9 @@
       </div>
     </div>
     <!-- sorting not built yet -->
-    <div class="bg-white ">
+    <div class="bg-white">
       <div
-        class="flex justify-between border-b-2 border-black text-4xl font-semibold p-4"
+        class="flex justify-between border-b-2 border-black text-4xl font-semibold m-4 p-2"
       >
         <h1>All Universities</h1>
         <div class="text-base flex items-center">
@@ -137,13 +137,14 @@
       </div>
       <!-- Page Nav not working yet. Just copied something from web. Not sure how to make this changeable yet -->
       <div class="flex justify-center">
-        <button @click="displayMore()" class="rounded-2xl p-4 justify-end hover:bg-blue-300">
+        <button
+          @click="displayMore()"
+          class="rounded-2xl p-4 justify-end hover:bg-blue-300"
+        >
           Load More
         </button>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -158,18 +159,18 @@ export default {
   },
 
   beforeMount() {
-    this.displayPage()
+    this.displayPage();
   },
   methods: {
     displayMore: function () {
-      this.startingCount += this.uniPerPage
-      this.displayPage()
+      this.startingCount += this.uniPerPage;
+      this.displayPage();
     },
     displayPage: function () {
       this.display = [];
-      let keys = Object.keys(this.universities)
+      let keys = Object.keys(this.universities);
       for (let i = 0; i < this.startingCount; i++) {
-        this.display.push(this.universities[keys[i]])
+        this.display.push(this.universities[keys[i]]);
       }
     },
     // Not sure how to make this sorting dropdown work
@@ -193,11 +194,11 @@ export default {
           }
         }
       } else if (filter.category === "Location") {
-        for (var i = 0; i < this.LocationFilters.length; i++) {
-          if (this.LocationFilters[i] === filter) {
-            this.LocationFilters.splice(i, 1);
+        for (var x = 0; x < this.LocationFilters.length; x++) {
+          if (this.LocationFilters[x] === filter) {
+            this.LocationFilters.splice(x, 1);
             this.selected.push(filter);
-            i--;
+            x--;
           }
         }
       }

@@ -1,7 +1,7 @@
 <template>
-  <div class="px-8">
+  <div>
     <NavBar />
-    <router-view></router-view>
+    <router-view class="px-8"></router-view>
   </div>
 </template>
 

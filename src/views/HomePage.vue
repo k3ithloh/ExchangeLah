@@ -1,7 +1,13 @@
 <template>
-  <div class="grid sm:grid-cols-8 sm:grid-rows-3 sm:gap-4 grid-cols-1 mx-4 ">
-    <div class="sm:col-span-6 sm:row-span-3 bg-white rounded-xl pt-10 px-8 box-border">
-      <h1 class="text-3xl font-semibold mb-8 text-center sm:text-left">Top Rated Universities</h1>
+  <div
+    class="grid sm:grid-cols-8 sm:grid-rows-3 sm:gap-4 grid-cols-1 mx-4 mb-4"
+  >
+    <div
+      class="sm:col-span-6 sm:row-span-3 bg-white rounded-xl pt-10 px-4 box-border"
+    >
+      <h1 class="text-3xl font-semibold ml-4 mb-8 text-center sm:text-left">
+        Top Rated Universities
+      </h1>
       <div class="flex flex-wrap justify-center">
         <UniversityItem
           v-for="university in universities"
@@ -11,7 +17,7 @@
       </div>
     </div>
     <div
-      class="sm:col-span-2 sm:row-span-1 bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px] "
+      class="sm:col-span-2 sm:row-span-1 bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px]"
     >
       <h1 class="font-semibold text-2xl text-center my-5">
         No idea where to go?
