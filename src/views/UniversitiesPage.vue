@@ -136,23 +136,24 @@
         />
       </div>
       <!-- Page Nav not working yet. Just copied something from web. Not sure how to make this changeable yet -->
-      <div class="flex justify-end pb-4 pr-4">
+      <div class="flex justify-end pb-4 pr-4 text-xl">
         <button @click="this.currentPage = 1;displayPage(this.currentPage)">
           <i class="fa-solid fa-angles-left"></i>
         </button>
         <div
           v-for="i in displayPages(this.currentPage)"
-          :key="i">
+          :key="i"
+          >
           <button
             v-if="i===currentPage"
             @click="displayPage(i)"
-            class="border-2 px-2 bg-blue-500">
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-500">
             {{ i }}
           </button>
           <button
             v-else
             @click="displayPage(i)"
-            class="border-2 px-2 bg-blue-300">
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-300">
             {{ i }}
           </button>
         </div>
