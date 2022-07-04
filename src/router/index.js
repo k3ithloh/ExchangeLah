@@ -25,6 +25,13 @@ export const router = createRouter({
       component: ModuleMapping,
     },
     {
+      path: "/community",
+      name: "Community",
+      beforeEnter() {
+        window.location.href = "https://www.reddit.com/";
+      },
+    },
+    {
       path: "/login",
       name: "LoginPage",
       component: LoginPage,

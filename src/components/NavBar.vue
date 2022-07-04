@@ -121,15 +121,13 @@
       <router-link class="m-4" to="/">
         <div class="flex flex-col items-center">
           <i class="fa-solid fa-house text-[#2D3D8F] h-6 w-6 pb-2"></i>
-          <a href="#home" class="text-[#2D3D8F] font-semibold">Home</a>
+          <span class="text-[#2D3D8F] font-semibold">Home</span>
         </div>
       </router-link>
       <router-link class="m-4" to="/universities">
         <div class="flex flex-col items-center">
           <i class="fa-solid fa-user-graduate text-[#2D3D8F] h-6 w-6 pb-2"></i>
-          <a href="#universities" class="text-[#2D3D8F] font-semibold"
-            >Universities</a
-          >
+          <span class="text-[#2D3D8F] font-semibold">Universities</span>
         </div>
       </router-link>
       <router-link class="m-4" to="/modulemapping">
@@ -137,17 +135,13 @@
           <i
             class="fa-solid fa-diagram-project text-[#2D3D8F] h-6 w-6 pb-2"
           ></i>
-          <a href="#modulemapping" class="text-[#2D3D8F] font-semibold"
-            >Module Mapping</a
-          >
+          <span class="text-[#2D3D8F] font-semibold">Module Mapping</span>
         </div>
       </router-link>
-      <router-link class="m-4" to="#community">
+      <router-link class="m-4" to="/community">
         <div class="flex flex-col items-center">
           <i class="fa-solid fa-comments text-[#2D3D8F] h-6 w-6 pb-2"></i>
-          <a href="#community" class="text-[#2D3D8F] font-semibold"
-            >Community</a
-          >
+          <span class="text-[#2D3D8F] font-semibold">Community</span>
         </div>
       </router-link>
     </div>

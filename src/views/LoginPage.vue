@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card rounded-md bg-zinc-50 p-10 flex items-center justify-center mx-auto w-full max-w-screen-sm my-6"
+    class="card rounded-md bg-zinc-50 p-10 flex items-center justify-center w-96 sm:w-full mx-auto max-w-screen-sm my-6"
   >
     <form>
       <h1
