@@ -71,12 +71,45 @@
       </div>
     </div>
     <div class="grid sm:grid-cols-[5fr_2fr] gap-4 rounded-xl">
-      <div class="bg-white">
-        Modules
+      <div class="">
+        <div class="flex justify-between border-b-2 border-black text-4xl font-semibold m-4 p-2">
+          <h1 class="text-2xl font-semibold">
+          All Modules
+          </h1>
+          <div class="text-base flex items-center">
+            <h6>Sort By:</h6>
+            <div class="border-2 flex justify-center items-center rounded-xl">
+              <select @change="sort(value)" id="sortBy" name="selections">
+                <option value="alphabertical">A-Z</option>
+                <option value="reversedAlphabertical">Z-A</option>
+                <option value="Option 1">Price</option>
+                <option value="Option 1">Distance</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="w-full">
+          <ModuleItem
+            v-for="module in modules"
+            :key="module.id"
+            :module="module"
+            :cart="this.cart"
+          />
+        </div>
       </div>
-      <div>
-        <div class="bg-white h-10">
-          Module Cart
+      <div class="flex flex-col">
+        <div class="bg-white">
+          <h1>
+            Module Cart
+          </h1>
+          <div class="flex flex-col">
+            <CartItem
+              v-for="module in cart"
+              :key="module.id"
+              :module="module"
+              :cart="this.cart"
+            />
+          </div>
         </div>
         <div class="bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px]">
           <h1 class="font-semibold text-2xl text-center my-5 px-20">
@@ -92,55 +125,19 @@
 </template>
 
 <script>
+import ModuleItem from "@/components/ModuleItem.vue";
+import CartItem from "@/components/CartItem.vue";
+
 export default {
   props: [],
   name: "ModuleMappingPage",
   components: {
-
+    ModuleItem,
+    CartItem,
   },
-
-  // beforeMount() {
-  //   this.displayPage()
-  //   this.pageCounter()
-  // },
   methods: {
-    // displayPages: function (page) {
-    //   let numDisplay = []
-    //   if (page === 1) {
-    //     for (let i = page; i <= Math.min(page + 3, this.pageCount); i++){
-    //       numDisplay.push(i)
-    //     }
-    //   }
-    //   else if (page >= this.pageCount -1){
-    //     for (let i = Math.max(this.pageCount - 3, 1); i <= Math.min(page + 3, this.pageCount); i++){
-    //       numDisplay.push(i)
-    //     }
-    //   }
-    //   else {
-    //     for (let i = page-1; i <= Math.min(page + 2, this.pageCount); i++){
-    //       numDisplay.push(i)
-    //     }
-    //   }
-    //   return numDisplay
-    // },
-    // pageCounter: function () {
-    //   this.pageCount = Math.ceil(Object.keys(this.universities).length / this.uniPerPage)
-    // },
-    // displayPage: function (page) {
-    //   this.currentPage = page ? page : 1
-    //   this.display = [];
-    //   let counter = 1
-    //   let loopStart = this.uniPerPage * this.currentPage - this.uniPerPage + 1;
-    //   let keys = Object.keys(this.universities)
-    //   for (let i = 1; i <= Object.keys(this.universities).length; i++) {
-    //     if (i === loopStart && counter <= this.uniPerPage) {
-    //       this.display.push(this.universities[keys[i-1]])
-    //       loopStart++;
-    //       counter++;
-    //     }
-    //   }
-    // },
     // Find a better way to add abd remove filters without having to manually add in each filter to each function
+
     addToFilter: function (filter) {
         for (var i = 0; i < this.Baskets.length; i++) {
           if (this.Baskets[i] === filter) {
@@ -175,73 +172,82 @@ export default {
   },
   data() {
     return {
+      cart: [],
       isBasketOpen: false,
-      modules: {
-        Module1: {
+      modules: [
+        {
           id: "1",
-          name: "National Module of Singapore",
+          basket: "IS",
+          name: "IS110",
           country: "Singapore",
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
         },
-        Module2: {
+        {
           id: "2",
-          name: "Nanyang Technological Module Nanyang Technological Module",
+          basket: "IS",
+          name: "IS111",
           country: "Singapore",
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
         },
-        Module3: {
+        {
           id: "3",
-          name: "Singapore Management Module",
+          basket: "IS",
+          name: "IS211",
           country: "Singapore",
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
         },
-        Module4: {
+        {
           id: "4",
-          name: "Singapore Module of Technology & Design",
+          name: "IS210",
+          basket: "IS",
           country: "Singapore",
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
         },
-        Module5: {
+        {
           id: "5",
-          name: "Singapore Institute of Technology",
+          basket: "Core",
+          name: "IS311",
           country: "Singapore",
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
         },
-        Module6: {
+        {
           id: "6",
-          name: "Singapore Module of Social Sciences",
+          basket: "Core",
+          name: "IS312",
           country: "Singapore",
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
         },
-        Module7: {
+        {
           id: "7",
-          name: "Seoul National Module",
+          basket: "Core",
+          name: "IS314",
           country: "South Korea",
           city: "Seoul",
           rating: "4.6",
           imgURL: "",
         },
-        Module8: {
+        {
           id: "8",
-          name: "The Module of Tokyo",
+          basket: "Core",
+          name: "IS315",
           country: "Japan",
           city: "Tokyo",
           rating: "4.6",
           imgURL: "",
         },
-      },
+      ],
       Baskets: [
         {
           id: 1,
