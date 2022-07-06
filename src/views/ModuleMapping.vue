@@ -98,8 +98,8 @@
         </div>
       </div>
       <div class="flex flex-col">
-        <div class="bg-white">
-          <h1>
+        <div class="bg-white mb-4 rounded-xl">
+          <h1 class=" font-semibold m-4">
             Module Cart
           </h1>
           <div class="flex flex-col">
@@ -110,12 +110,16 @@
               :cart="this.cart"
             />
           </div>
+          <button class=" float-right bottom-0 bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Search University
+          </button>
         </div>
         <div class="bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px]">
           <h1 class="font-semibold text-2xl text-center my-5 px-20">
             Don't Know Which Modules to Choose?
           </h1>
-          <router-link to="#show-me" class="bg-[#FAFAFA] rounded-lg py-3 px-4">
+          <router-link to="#show-me" class="bg-[#FAFAFA] rounded-lg py-3 px-4 mb-4 hover:bg-slate-400">
             <span class="font-medium text-base">Show Me</span>
           </router-link>
         </div>
