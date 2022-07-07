@@ -1,8 +1,42 @@
 <template>
-  <div class="h-full grid sm:grid-cols-[2fr_5fr] gap-4 rounded-xl">
+  <transition
+    enter-active-class="duration-500 transform transition ease-in-out origin-right "
+    enter-from-class="scale-x-0 opacity-0"
+    enter-to-class="scale-x-100 opacity-100 "
+    leave-active-class="duration-200 transform transition ease-in-out origin-right"
+    leave-from-class="scale-x-100 opacity-100"
+    leave-to-class="scale-x-50 opacity-0"
+  >
+    <div v-if="showFilter" class="fixed bg-slate-100/80 top-0 right-0 bottom-0 left-0">
+      <div class="bg-white mb-4 rounded-xl fixed h-full w-3/4 overflow-y-auto top-0 right-0 opacity-100">
+        <div class="flex justify-between m-4">
+          <h1 class=" font-semibold">
+            Module Cart
+          </h1>
+          <button @click="clearCart()">
+            Clear
+          </button>
+        </div>
+        <div class="flex flex-col">
+          <CartItem
+            v-for="module in cart"
+            :key="module.id"
+            :module="module"
+            :cart="this.cart"
+          />
+        </div>
+        <button class="float-left bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search University
+        </button>
+
+      </div>
+    </div>
+  </transition>
+  <div class="h-full grid md:grid-cols-[2fr_5fr] gap-4 rounded-xl">
     <div class=""></div>
     <div
-      class="bg-white flex flex-col rounded-xl sm:h-3/4 sm:fixed sm:overflow-y-scroll sm:w-1/4"
+      class="bg-white flex flex-col rounded-xl md:h-3/4 md:fixed md:overflow-y-scroll md:w-1/4"
     >
       <div class="flex justify-between p-2">
         <h3 class="font-semibold">Selected</h3>
@@ -44,7 +78,7 @@
           enter-active-class="duration-500 transform transition ease-in-out origin-top "
           enter-from-class="scale-y-0 opacity-0"
           enter-to-class="scale-y-100 opacity-100 "
-          leave-active-class="duration-200 transform ease-in-out origin-top"
+          leave-active-class="duration-200 transform transition ease-in-out origin-top"
           leave-from-class="scale-y-100 opacity-100"
           leave-to-class="scale-y-50 opacity-0"
         >
@@ -70,10 +104,10 @@
         </transition>
       </div>
     </div>
-    <div class="grid sm:grid-cols-[5fr_2fr] gap-4 rounded-xl">
+    <div class="grid md:grid-cols-[5fr_2fr] gap-4 rounded-xl">
       <div class="">
         <div class="flex justify-between border-b-2 border-black text-4xl font-semibold m-4 p-2">
-          <h1 class="text-2xl font-semibold">
+          <h1 class="md:text-4xl text-xl font-semibold">
           All Modules
           </h1>
           <div class="text-base flex items-center">
@@ -98,10 +132,20 @@
         </div>
       </div>
       <div class="flex flex-col">
-        <div class="bg-white mb-4 rounded-xl">
-          <h1 class=" font-semibold m-4">
-            Module Cart
-          </h1>
+        <div @click="showFilter = !showFilter" class="fixed text-xl right-6 bottom-6 md:hidden bg-blue-300 rounded-full px-4 py-3">
+          <span>
+            <i class="fa-solid fa-cart-shopping"></i>
+          </span>
+        </div>
+        <div class="bg-white mb-4 rounded-xl hidden md:block">
+          <div class="flex justify-between m-4">
+            <h1 class=" font-semibold">
+              Module Cart
+            </h1>
+            <button @click="clearCart()">
+              Clear
+            </button>
+          </div>
           <div class="flex flex-col">
             <CartItem
               v-for="module in cart"
@@ -173,9 +217,13 @@ export default {
       });
       this.selected = [];
     },
+    clearCart: function () {
+      this.cart = []
+    },
   },
   data() {
     return {
+      showFilter: false,
       cart: [],
       isBasketOpen: false,
       modules: [
