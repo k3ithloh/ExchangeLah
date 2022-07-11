@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/views/HomePage.vue";
 import UniversitiesPage from "@/views/UniversitiesPage.vue";
+import UniversityInfo from "@/views/UniversityInfo.vue";
 import ModuleMapping from "@/views/ModuleMapping.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import SignUp from "@/views/SignUp.vue";
@@ -19,6 +20,11 @@ export const router = createRouter({
       path: "/universities",
       name: "UniversitiesPage",
       component: UniversitiesPage,
+    },
+    {
+      path: "/universityinfo",
+      name: "UniversityInfo",
+      component: UniversityInfo,
     },
     {
       path: "/modulemapping",
