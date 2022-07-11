@@ -17,7 +17,7 @@
         >
       </div>
     </div>
-    <router-link to="#tokyo-university" class="mx-4">
+    <router-link to="/universityinfo" class="mx-4">
       <i class="fa-solid fa-angle-right text-slate-500"></i>
     </router-link>
   </div>

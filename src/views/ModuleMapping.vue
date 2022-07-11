@@ -33,7 +33,7 @@
       </div>
     </div>
   </transition>
-  <div class="h-full grid md:grid-cols-[2fr_5fr] gap-4 rounded-xl">
+  <div class="h-full grid md:grid-cols-[2fr_5fr] gap-4 rounded-xl px-4">
     <div class=""></div>
     <div
       class="bg-white flex flex-col rounded-xl md:h-3/4 md:fixed md:overflow-y-scroll md:w-1/4"
