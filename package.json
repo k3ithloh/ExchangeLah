@@ -13,6 +13,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "flowbite": "^1.4.7",
+    "mapbox-gl": "^2.9.1",
     "vue": "^3.2.33",
     "vue-pagination-tw": "^0.1.2",
     "vue-router": "^4.0.15",
