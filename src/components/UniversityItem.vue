@@ -18,7 +18,6 @@
         >{{ university.city }}, {{ university.country }}</span
       >
     </div>
-    <!-- TODO Find a better way for margin -->
     <div class="flex items-center">
       <div class="mr-1">
         <i class="fa-solid fa-star text-[#EDD36A] mr-1"></i>
