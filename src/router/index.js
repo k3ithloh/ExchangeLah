@@ -5,6 +5,7 @@ import ModuleMapping from "@/views/ModuleMapping.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import SignUp from "@/views/SignUp.vue";
 import ForgotPassword from "@/views/ForgotPassword.vue";
+import UniversityInfo from "@/views/UniversityInfo.vue";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -45,6 +46,11 @@ export const router = createRouter({
       path: "/forgotpassword",
       name: "ForgotPassword",
       component: ForgotPassword,
+    },
+    {
+      path: "/universityinfo",
+      name: "UniversityInfo",
+      component: UniversityInfo,
     },
   ],
 });

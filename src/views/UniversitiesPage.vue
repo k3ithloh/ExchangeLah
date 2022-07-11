@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full grid sm:grid-cols-[2fr_5fr] gap-4 rounded-xl">
+  <div class="h-full grid sm:grid-cols-[2fr_5fr] gap-4 rounded-xl px-4">
     <div class=""></div>
     <div
       class="bg-white flex flex-col rounded-xl sm:h-3/4 sm:fixed sm:overflow-y-scroll sm:w-1/4"
@@ -112,7 +112,7 @@
     <!-- sorting not built yet -->
     <div class="bg-white">
       <div
-        class="flex justify-between border-b-2 border-black text-4xl font-semibold m-4 p-2"
+        class="flex justify-between border-b-2 border-black sm:text-4xl font-semibold m-4 p-2 text-xl"
       >
         <h1>All Universities</h1>
         <div class="text-base flex items-center">

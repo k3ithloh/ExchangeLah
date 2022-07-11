@@ -7,9 +7,11 @@
       alt="Tokyo University"
       class="h-40 w-full rounded-md mb-2"
     />
-    <h4 class="font-semibold text-base mb-1 line-clamp-2">
-      {{ university.name }}
-    </h4>
+    <router-link to="/universityinfo">
+      <h4 class="font-semibold text-base mb-1 line-clamp-2">
+        {{ university.name }}
+      </h4>
+    </router-link>
     <div class="flex items-center mb-1">
       <i class="fa-solid fa-location-dot text-gray-300 mr-2"></i>
       <span class="font-regular text-sm text-gray-400"
