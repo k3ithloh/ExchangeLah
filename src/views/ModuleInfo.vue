@@ -1,7 +1,7 @@
 <template>
   <div class="md:px-10">
     <h1 class="font-semibold text-xl pt-3 md:text-2xl">
-      {{ $route.params.name }}
+      {{ module.name }}
     </h1>
     <div>
       <div class="flex items-center mt-2">
@@ -19,24 +19,22 @@
           href="#"
           >200 reviews</a
         >
-        <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
-        <i class="fa-solid fa-basket-shopping text-gray-400 ml-3"></i>
-        <span class="ml-2 text-sm text-gray-600">Module Basket</span>
+        <div class="items-center flex">
+          <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
+          <i class="fa-solid fa-basket-shopping text-gray-400 ml-3"></i>
+        </div>
+        <button class="ml-2 text-sm text-gray-600">{{ module.basket }}</button>
       </div>
-
     </div>
     <div class="grid md:grid-cols-[5fr_2fr] gap-4 rounded-xl">
         <div >
             <div class="rounded-2xl bg-zinc-50 p-5 mx-auto w-full my-6">
                 <span class="font-medium text-lg md:text-xl">Description</span>
                 <p class="mt-4 text-justify text-sm text-gray-800 md:text-base">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius laborum rerum, rem labore at perferendis impedit dicta quos placeat recusandae facilis non, adipisci molestiae fugit optio, quaerat magnam nulla quod.
-                </p>
-                <p class="mt-3 text-justify text-sm text-gray-800 md:text-base">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis amet illo nostrum iure explicabo dolor quod eveniet iste maxime laboriosam id inventore saepe exercitationem veniam reiciendis dicta omnis vel tenetur praesentium rem aspernatur, ducimus minima doloribus doloremque. Tempore sunt, maiores similique sed doloremque magni error cum laboriosam voluptatem distinctio quia.
+                    {{ module.description }}
                 </p>
             </div>
-            <div>
+            <div class="font-semibold md:text-2xl">
                 Reviews
             </div>
         </div>
@@ -44,7 +42,7 @@
             <div class="bg-zinc-50 rounded-2xl text-center p-4 my-6">
                 <span class="p-4">
                     <h1 class="md:text-4xl">
-                        4/5
+                        {{ module.difficulty }}
                     </h1>
                     <h1>
                         Difficulty
@@ -52,7 +50,7 @@
                 </span>
                 <span class="p-4">
                     <h1 class="md:text-4xl">
-                        4/5
+                        {{ module.popularity }}
                     </h1>
                     <h1>
                         Popularity
@@ -60,7 +58,37 @@
                 </span>
             </div>
             <div class="bg-zinc-50 rounded-2xl">
-                <h1 class="font-semibold md:text-2xl">Teachers</h1>
+                <h1 class="font-semibold md:text-2xl md:p-4">Teachers</h1>
+                <div class="flex flex-col px-6 space-y-4">
+                  <span class="border-2 rounded-xl p-2 flex items-center space-x-4 pl-4">
+                    <i class="fa-solid fa-user text-3xl"></i>
+                    <div>
+                      <h4 class="font-semibold">Teacher Name</h4>
+                      <h6 class="text-xs">School Name</h6>
+                    </div>
+                  </span>
+                  <span class="border-2 rounded-xl p-2 flex items-center space-x-4 pl-4">
+                    <i class="fa-solid fa-user text-3xl"></i>
+                    <div>
+                      <h4 class="font-semibold">Teacher Name</h4>
+                      <h6 class="text-xs">School Name</h6>
+                    </div>
+                  </span>
+                  <span class="border-2 rounded-xl p-2 flex items-center space-x-4 pl-4">
+                    <i class="fa-solid fa-user text-3xl"></i>
+                    <div>
+                      <h4 class="font-semibold">Teacher Name</h4>
+                      <h6 class="text-xs">School Name</h6>
+                    </div>
+                  </span>
+                  <span class="border-2 rounded-xl p-2 flex items-center space-x-4 pl-4">
+                    <i class="fa-solid fa-user text-3xl"></i>
+                    <div>
+                      <h4 class="font-semibold">Teacher Name</h4>
+                      <h6 class="text-xs">School Name</h6>
+                    </div>
+                  </span>
+                </div>
             </div>
         </div>
     </div>
@@ -68,16 +96,32 @@
 </template>
 
 <script>
+import Data from "@/views/ModuleMapping.vue";
 
 export default {
   name: "UniversityInfo",
-  components: {},
+  props: [],
+  components: {
+    Data
+  },
   data() {
     return {
+      modules: Data.data().modules,
+      module: []
     };
   },
+  beforeMount() {
+    this.getModule()
+  },
   methods: {
-
+        getModule: function () {
+          for (var i = 0; i < this.modules.length; i++){
+            if (this.modules[i].name === this.$route.params.name){
+              this.module = this.modules[i]
+            }
+          }
+          console.log(this.module)
+      },
   },
 };
 </script>
