@@ -235,6 +235,9 @@ export default {
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS110",
+          difficulty: "5/5",
+          popularity: "1.5/5",
         },
         {
           id: "2",
@@ -244,6 +247,9 @@ export default {
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS111",
+          difficulty: "1/5",
+          popularity: "4/5",
         },
         {
           id: "3",
@@ -253,6 +259,9 @@ export default {
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS211",
+          difficulty: "2/5",
+          popularity: "3/5",
         },
         {
           id: "4",
@@ -262,6 +271,9 @@ export default {
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS210",
+          difficulty: "1/5",
+          popularity: "2.5/5",
         },
         {
           id: "5",
@@ -271,6 +283,9 @@ export default {
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS311",
+          difficulty: "5/5",
+          popularity: "4.5/5",
         },
         {
           id: "6",
@@ -280,6 +295,9 @@ export default {
           city: "Singapore",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS312",
+          difficulty: "2/5",
+          popularity: "3.5/5",
         },
         {
           id: "7",
@@ -289,6 +307,9 @@ export default {
           city: "Seoul",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS314",
+          difficulty: "4/5",
+          popularity: "2.5/5",
         },
         {
           id: "8",
@@ -298,6 +319,9 @@ export default {
           city: "Tokyo",
           rating: "4.6",
           imgURL: "",
+          description: "description on IS315",
+          difficulty: "5/5",
+          popularity: "3.5/5",
         },
       ],
       Baskets: [
