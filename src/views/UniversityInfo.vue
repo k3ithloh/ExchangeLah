@@ -127,6 +127,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import mapboxgl from "mapbox-gl";
 
 export default {
@@ -139,6 +140,13 @@ export default {
     };
   },
   mounted() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/Nanyang Technological University"
+      )
+      .then((response) => {
+        console.log(response.data);
+      });
     this.createMap();
   },
   methods: {
