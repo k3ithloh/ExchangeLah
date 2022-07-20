@@ -38,6 +38,16 @@
     <div
       class="bg-white flex flex-col rounded-xl md:h-3/4 md:fixed md:overflow-y-scroll md:w-1/4"
     >
+      <div>
+        <h3 class="p-2">Choose Your University</h3>
+        <select v-model="selectedUniversity" @change="moduleSelectByUni()">
+          <option
+          v-for="university in universityList"
+          :key="university">
+            {{ university.UniversityName }}
+          </option>
+        </select>
+      </div>
       <div class="flex justify-between p-2">
         <h3 class="font-semibold">Selected</h3>
         <button @click="clearFilter()" class="text-xs">Clear</button>
@@ -110,6 +120,7 @@
           <h1 class="md:text-4xl text-xl font-semibold">
           All Modules
           </h1>
+
           <div class="text-base flex items-center">
             <h6>Sort By:</h6>
             <div class="border-2 flex justify-center items-center rounded-xl">
@@ -122,9 +133,12 @@
             </div>
           </div>
         </div>
-        <div class="w-full">
+        <div v-if="filteredList.length === 0">
+          <h1 class="text-2xl font font-semibold flex p-4 border-4 justify-center">Please select an University to begin</h1>
+        </div>
+        <div v-else class="w-full">
           <ModuleItem
-            v-for="module in modules"
+            v-for="module in display"
             :key="module.id"
             :module="module"
             :cart="this.cart"
@@ -168,6 +182,31 @@
           </router-link>
         </div>
       </div>
+            <div class="flex justify-end pb-4 pr-4 text-xl">
+        <button @click="this.currentPage = 1;displayPage(this.currentPage)">
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
+        <div
+          v-for="i in displayPages(this.currentPage)"
+          :key="i"
+          >
+          <button
+            v-if="i===currentPage"
+            @click="displayPage(i)"
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-500">
+            {{ i }}
+          </button>
+          <button
+            v-else
+            @click="displayPage(i)"
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-300">
+            {{ i }}
+          </button>
+        </div>
+        <button @click="this.currentPage = pageCount;displayPage(this.currentPage)">
+          <i class="fa-solid fa-angles-right"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -175,6 +214,8 @@
 <script>
 import ModuleItem from "@/components/ModuleItem.vue";
 import CartItem from "@/components/CartItem.vue";
+import universities from "@/Json/universities.json";
+import modules from "@/Json/Modules.json";
 
 export default {
   props: [],
@@ -183,7 +224,47 @@ export default {
     ModuleItem,
     CartItem,
   },
+  beforeMount() {
+    this.displayPage()
+    this.pageCounter()
+  },
   methods: {
+    pageCounter: function () {
+      this.pageCount = Math.ceil(Object.keys(this.filteredList).length / this.modPerPage)
+    },
+    displayPage: function (page) {
+      this.currentPage = page ? page : 1
+      this.display = [];
+      let counter = 1
+      let loopStart = this.modPerPage * this.currentPage - this.modPerPage + 1;
+      let keys = Object.keys(this.filteredList)
+      for (let i = 1; i <= Object.keys(this.filteredList).length; i++) {
+        if (i === loopStart && counter <= this.modPerPage) {
+          this.display.push(this.filteredList[keys[i-1]])
+          loopStart++;
+          counter++;
+        }
+      }
+    },
+    displayPages: function (page) {
+      let numDisplay = []
+      if (page === 1) {
+        for (let i = page; i <= Math.min(page + 3, this.pageCount); i++){
+          numDisplay.push(i)
+        }
+      }
+      else if (page >= this.pageCount -1){
+        for (let i = Math.max(this.pageCount - 3, 1); i <= Math.min(page + 3, this.pageCount); i++){
+          numDisplay.push(i)
+        }
+      }
+      else {
+        for (let i = page-1; i <= Math.min(page + 2, this.pageCount); i++){
+          numDisplay.push(i)
+        }
+      }
+      return numDisplay
+    },
     // Find a better way to add abd remove filters without having to manually add in each filter to each function
 
     addToFilter: function (filter) {
@@ -220,110 +301,128 @@ export default {
     clearCart: function () {
       this.cart = []
     },
+    moduleSelectByUni: function () {
+      this.filteredList = []
+      for (let i = 0; i < this.moduleList.length; i++){
+        if (this.moduleList[i].UniversityName === this.selectedUniversity){
+          this.filteredList.push(this.moduleList[i])
+        }
+      }
+      this.displayPage()
+      this.pageCounter()
+    },
   },
   data() {
     return {
+      display: [],
+      currentPage: 1,
+      modPerPage: 30,
+      pageCount: 1,
+      universityList: universities,
+      selectedUniversity: null,
       showFilter: false,
       cart: [],
       isBasketOpen: false,
-      modules: [
-        {
-          id: "1",
-          basket: "IS",
-          name: "IS110",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS110",
-          difficulty: "5/5",
-          popularity: "1.5/5",
-        },
-        {
-          id: "2",
-          basket: "IS",
-          name: "IS111",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS111",
-          difficulty: "1/5",
-          popularity: "4/5",
-        },
-        {
-          id: "3",
-          basket: "IS",
-          name: "IS211",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS211",
-          difficulty: "2/5",
-          popularity: "3/5",
-        },
-        {
-          id: "4",
-          name: "IS210",
-          basket: "IS",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS210",
-          difficulty: "1/5",
-          popularity: "2.5/5",
-        },
-        {
-          id: "5",
-          basket: "Core",
-          name: "IS311",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS311",
-          difficulty: "5/5",
-          popularity: "4.5/5",
-        },
-        {
-          id: "6",
-          basket: "Core",
-          name: "IS312",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS312",
-          difficulty: "2/5",
-          popularity: "3.5/5",
-        },
-        {
-          id: "7",
-          basket: "Core",
-          name: "IS314",
-          country: "South Korea",
-          city: "Seoul",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS314",
-          difficulty: "4/5",
-          popularity: "2.5/5",
-        },
-        {
-          id: "8",
-          basket: "Core",
-          name: "IS315",
-          country: "Japan",
-          city: "Tokyo",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS315",
-          difficulty: "5/5",
-          popularity: "3.5/5",
-        },
-      ],
+      moduleList: modules,
+      filteredList: [],
+      // modules: [
+      //   {
+      //     id: "1",
+      //     basket: "IS",
+      //     name: "IS110",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS110",
+      //     difficulty: "5/5",
+      //     popularity: "1.5/5",
+      //   },
+      //   {
+      //     id: "2",
+      //     basket: "IS",
+      //     name: "IS111",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS111",
+      //     difficulty: "1/5",
+      //     popularity: "4/5",
+      //   },
+      //   {
+      //     id: "3",
+      //     basket: "IS",
+      //     name: "IS211",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS211",
+      //     difficulty: "2/5",
+      //     popularity: "3/5",
+      //   },
+      //   {
+      //     id: "4",
+      //     name: "IS210",
+      //     basket: "IS",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS210",
+      //     difficulty: "1/5",
+      //     popularity: "2.5/5",
+      //   },
+      //   {
+      //     id: "5",
+      //     basket: "Core",
+      //     name: "IS311",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS311",
+      //     difficulty: "5/5",
+      //     popularity: "4.5/5",
+      //   },
+      //   {
+      //     id: "6",
+      //     basket: "Core",
+      //     name: "IS312",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS312",
+      //     difficulty: "2/5",
+      //     popularity: "3.5/5",
+      //   },
+      //   {
+      //     id: "7",
+      //     basket: "Core",
+      //     name: "IS314",
+      //     country: "South Korea",
+      //     city: "Seoul",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS314",
+      //     difficulty: "4/5",
+      //     popularity: "2.5/5",
+      //   },
+      //   {
+      //     id: "8",
+      //     basket: "Core",
+      //     name: "IS315",
+      //     country: "Japan",
+      //     city: "Tokyo",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //     description: "description on IS315",
+      //     difficulty: "5/5",
+      //     popularity: "3.5/5",
+      //   },
+      // ],
       Baskets: [
         {
           id: 1,

@@ -9,13 +9,13 @@
     />
     <router-link to="/universityinfo">
       <h4 class="font-semibold text-base mb-1 line-clamp-2">
-        {{ university.name }}
+        {{ university.UniversityName }}
       </h4>
     </router-link>
     <div class="flex items-center mb-1">
       <i class="fa-solid fa-location-dot text-gray-300 mr-2"></i>
       <span class="font-regular text-sm text-gray-400"
-        >{{ university.city }}, {{ university.country }}</span
+        >{{ region }}, {{ country }}</span
       >
     </div>
     <div class="flex items-center">
@@ -32,11 +32,43 @@
 </template>
 
 <script>
+import countries from "@/Json/Countries.json";
+import regions from "@/Json/Regions.json";
+
 export default {
   name: "UniversityItem",
   props: {
     university: { type: Object },
   },
+  data() {
+    return {
+      countryList: countries,
+      regionList: regions,
+      country: null,
+      region: null,
+    }
+  },
+  beforeMount() {
+    this.getCountry()
+    this.getRegion()
+  },
+  methods: {
+    getCountry: function () {
+      for (var i = 0; i < this.countryList.length; i++) {
+        if (this.countryList[i].CountryId === this.university.CountryId){
+          this.country = this.countryList[i].CountryName
+        }
+      }
+    },
+    getRegion: function () {
+      for (var i = 0; i < this.regionList.length; i++) {
+        if (this.regionList[i].RegionId === this.university.RegionId){
+          this.region = this.regionList[i].RegionName
+        }
+      }
+    },
+
+  }
 };
 </script>
 

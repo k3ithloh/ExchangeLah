@@ -31,10 +31,15 @@
         Recommended for you
       </h3>
       <div>
-        <UniversityCard :university="universities.university1" />
+        <UniversityCard
+          v-for="university in universities"
+          :key="university.id"
+          :university="university"
+        />
+        <!-- <UniversityCard :university="universities.university1" />
         <UniversityCard :university="universities.university2" />
         <UniversityCard :university="universities.university3" />
-        <UniversityCard :university="universities.university8" />
+        <UniversityCard :university="universities.university8" /> -->
       </div>
     </div>
   </div>
@@ -43,77 +48,79 @@
 <script>
 import UniversityItem from "@/components/UniversityItem.vue";
 import UniversityCard from "@/components/UniversityCard.vue";
+import UniList from "@/Json/Universities.json";
 
 export default {
   name: "HomePage",
   data() {
     return {
-      universities: {
-        university1: {
-          id: "1",
-          name: "National University of Singapore",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university2: {
-          id: "2",
-          name: "Nanyang Technological University",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university3: {
-          id: "3",
-          name: "Singapore Management University",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university4: {
-          id: "4",
-          name: "Singapore University of Technology & Design",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university5: {
-          id: "5",
-          name: "Singapore Institute of Technology",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university6: {
-          id: "6",
-          name: "Singapore University of Social Sciences",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university7: {
-          id: "7",
-          name: "Seoul National University",
-          country: "South Korea",
-          city: "Seoul",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university8: {
-          id: "8",
-          name: "The University of Tokyo",
-          country: "Japan",
-          city: "Tokyo",
-          rating: "4.6",
-          imgURL: "",
-        },
-      },
+      universities: UniList,
+      // universities: {
+      //   university1: {
+      //     id: "1",
+      //     name: "National University of Singapore",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university2: {
+      //     id: "2",
+      //     name: "Nanyang Technological University",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university3: {
+      //     id: "3",
+      //     name: "Singapore Management University",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university4: {
+      //     id: "4",
+      //     name: "Singapore University of Technology & Design",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university5: {
+      //     id: "5",
+      //     name: "Singapore Institute of Technology",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university6: {
+      //     id: "6",
+      //     name: "Singapore University of Social Sciences",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university7: {
+      //     id: "7",
+      //     name: "Seoul National University",
+      //     country: "South Korea",
+      //     city: "Seoul",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university8: {
+      //     id: "8",
+      //     name: "The University of Tokyo",
+      //     country: "Japan",
+      //     city: "Tokyo",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      // },
     };
   },
   components: {

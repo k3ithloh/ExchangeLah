@@ -32,7 +32,7 @@
           @click="isLocationOpen = !isLocationOpen"
           class="flex items-center space-x-4"
         >
-          <h6>Location</h6>
+          <h6>Region</h6>
           <span v-if="isLocationOpen">
             <i class="fa-solid fa-angle-down"></i>
           </span>
@@ -135,7 +135,7 @@
           :university="university"
         />
       </div>
-      <!-- Page Nav not working yet. Just copied something from web. Not sure how to make this changeable yet -->
+        <!-- PAGINATION -->
       <div class="flex justify-end pb-4 pr-4 text-xl">
         <button @click="this.currentPage = 1;displayPage(this.currentPage)">
           <i class="fa-solid fa-angles-left"></i>
@@ -167,6 +167,8 @@
 
 <script>
 import UniversityItem from "@/components/UniversityItem.vue";
+import UniList from "@/Json/Universities.json";
+import regions from "@/Json/Regions.json";
 
 export default {
   props: [],
@@ -174,12 +176,23 @@ export default {
   components: {
     UniversityItem,
   },
-
   beforeMount() {
     this.displayPage()
     this.pageCounter()
+    this.createLocationFilter()
   },
   methods: {
+    createLocationFilter: function (){
+      for (var i = 0; i < this.regionList.length; i ++){
+        var tempObj = {
+          id: i,
+          name: this.regionList[i].RegionName,
+          checked: true,
+          category: "Location",
+        }
+        this.LocationFilters.push(tempObj)
+      }
+    },
     displayPages: function (page) {
       let numDisplay = []
       if (page === 1) {
@@ -284,105 +297,81 @@ export default {
   },
   data() {
     return {
-
+      regionList: regions,
       display: "",
       currentPage: 1,
       uniPerPage: 1,
       pageCount: 1,
       isLocationOpen: false,
       isPriceOpen: false,
-      universities: {
-        university1: {
-          id: "1",
-          name: "National University of Singapore",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university2: {
-          id: "2",
-          name: "Nanyang Technological University Nanyang Technological University",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university3: {
-          id: "3",
-          name: "Singapore Management University",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university4: {
-          id: "4",
-          name: "Singapore University of Technology & Design",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university5: {
-          id: "5",
-          name: "Singapore Institute of Technology",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university6: {
-          id: "6",
-          name: "Singapore University of Social Sciences",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university7: {
-          id: "7",
-          name: "Seoul National University",
-          country: "South Korea",
-          city: "Seoul",
-          rating: "4.6",
-          imgURL: "",
-        },
-        university8: {
-          id: "8",
-          name: "The University of Tokyo",
-          country: "Japan",
-          city: "Tokyo",
-          rating: "4.6",
-          imgURL: "",
-        },
-      },
-      LocationFilters: [
-        {
-          id: 1,
-          name: "filter 1",
-          checked: true,
-          category: "Location",
-        },
-        {
-          id: 2,
-          name: "filter 2",
-          checked: true,
-          category: "Location",
-        },
-        {
-          id: 3,
-          name: "filter 3",
-          checked: true,
-          category: "Location",
-        },
-        {
-          id: 4,
-          name: "filter 4",
-          checked: true,
-          category: "Location",
-        },
-      ],
+      universities: UniList,
+      // universities: {
+      //   university1: {
+      //     id: "1",
+      //     name: "National University of Singapore",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university2: {
+      //     id: "2",
+      //     name: "Nanyang Technological University Nanyang Technological University",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university3: {
+      //     id: "3",
+      //     name: "Singapore Management University",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university4: {
+      //     id: "4",
+      //     name: "Singapore University of Technology & Design",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university5: {
+      //     id: "5",
+      //     name: "Singapore Institute of Technology",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university6: {
+      //     id: "6",
+      //     name: "Singapore University of Social Sciences",
+      //     country: "Singapore",
+      //     city: "Singapore",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university7: {
+      //     id: "7",
+      //     name: "Seoul National University",
+      //     country: "South Korea",
+      //     city: "Seoul",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      //   university8: {
+      //     id: "8",
+      //     name: "The University of Tokyo",
+      //     country: "Japan",
+      //     city: "Tokyo",
+      //     rating: "4.6",
+      //     imgURL: "",
+      //   },
+      // },
+      LocationFilters: [],
       PriceFilters: [
         {
           id: 5,
