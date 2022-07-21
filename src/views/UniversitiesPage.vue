@@ -135,29 +135,38 @@
           :university="university"
         />
       </div>
-        <!-- PAGINATION -->
+      <!-- PAGINATION -->
       <div class="flex justify-end pb-4 pr-4 text-xl">
-        <button @click="this.currentPage = 1;displayPage(this.currentPage)">
+        <button
+          @click="
+            this.currentPage = 1;
+            displayPage(this.currentPage);
+          "
+        >
           <i class="fa-solid fa-angles-left"></i>
         </button>
-        <div
-          v-for="i in displayPages(this.currentPage)"
-          :key="i"
-          >
+        <div v-for="i in displayPages(this.currentPage)" :key="i">
           <button
-            v-if="i===currentPage"
+            v-if="i === currentPage"
             @click="displayPage(i)"
-            class="border-2 mx-1 px-2 rounded-2xl bg-blue-500">
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-500"
+          >
             {{ i }}
           </button>
           <button
             v-else
             @click="displayPage(i)"
-            class="border-2 mx-1 px-2 rounded-2xl bg-blue-300">
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-300"
+          >
             {{ i }}
           </button>
         </div>
-        <button @click="this.currentPage = pageCount;displayPage(this.currentPage)">
+        <button
+          @click="
+            this.currentPage = pageCount;
+            displayPage(this.currentPage);
+          "
+        >
           <i class="fa-solid fa-angles-right"></i>
         </button>
       </div>
@@ -176,67 +185,75 @@ export default {
     UniversityItem,
   },
   created() {
-    axios
-      .get(
-        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university"
-      )
-      .then((response) => {
-        this.universities = response.data
-        this.displayPage()
-        this.pageCounter()
-      });
-    axios
-      .get(
-        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"
-      )
-      .then((response) => {
-        this.regionList = response.data
-        this.createLocationFilter()
-      });
+    this.getUniversities();
+    this.getRegion();
   },
   methods: {
-    createLocationFilter: function (){
-      for (var i = 0; i < this.regionList.length; i ++){
+    getUniversities() {
+      axios
+        .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
+        .then((response) => {
+          this.universities = response.data;
+          this.pageCounter();
+          this.displayPage();
+        })
+        .catch((error) => console.log(error.response));
+    },
+    getRegion() {
+      axios
+        .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region")
+        .then((response) => {
+          this.regionList = response.data;
+          this.createLocationFilter();
+        })
+        .catch((error) => console.log(error.response));
+    },
+    createLocationFilter: function () {
+      for (var i = 0; i < this.regionList.length; i++) {
         var tempObj = {
           id: i,
           name: this.regionList[i].regionName,
           checked: true,
           category: "Location",
-        }
-        this.LocationFilters.push(tempObj)
+        };
+        this.LocationFilters.push(tempObj);
       }
     },
     displayPages: function (page) {
-      let numDisplay = []
+      let numDisplay = [];
       if (page === 1) {
-        for (let i = page; i <= Math.min(page + 3, this.pageCount); i++){
-          numDisplay.push(i)
+        for (let i = page; i <= Math.min(page + 3, this.pageCount); i++) {
+          numDisplay.push(i);
+        }
+      } else if (page >= this.pageCount - 1) {
+        for (
+          let i = Math.max(this.pageCount - 3, 1);
+          i <= Math.min(page + 3, this.pageCount);
+          i++
+        ) {
+          numDisplay.push(i);
+        }
+      } else {
+        for (let i = page - 1; i <= Math.min(page + 2, this.pageCount); i++) {
+          numDisplay.push(i);
         }
       }
-      else if (page >= this.pageCount -1){
-        for (let i = Math.max(this.pageCount - 3, 1); i <= Math.min(page + 3, this.pageCount); i++){
-          numDisplay.push(i)
-        }
-      }
-      else {
-        for (let i = page-1; i <= Math.min(page + 2, this.pageCount); i++){
-          numDisplay.push(i)
-        }
-      }
-      return numDisplay
+      return numDisplay;
     },
     pageCounter: function () {
-      this.pageCount = Math.ceil(Object.keys(this.universities).length / this.uniPerPage)
+      this.pageCount = Math.ceil(
+        Object.keys(this.universities).length / this.uniPerPage
+      );
     },
     displayPage: function (page) {
-      this.currentPage = page ? page : 1
+      this.currentPage = page ? page : 1;
       this.display = [];
-      let counter = 1
+      let counter = 1;
       let loopStart = this.uniPerPage * this.currentPage - this.uniPerPage + 1;
-      let keys = Object.keys(this.universities)
+      let keys = Object.keys(this.universities);
       for (let i = 1; i <= Object.keys(this.universities).length; i++) {
         if (i === loopStart && counter <= this.uniPerPage) {
-          this.display.push(this.universities[keys[i-1]])
+          this.display.push(this.universities[keys[i - 1]]);
           loopStart++;
           counter++;
         }

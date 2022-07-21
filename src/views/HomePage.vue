@@ -22,7 +22,10 @@
       <h1 class="font-semibold text-2xl text-center my-5">
         No idea where to go?
       </h1>
-      <router-link to="#show-me" class="bg-[#FAFAFA] hover:bg-slate-400 rounded-lg py-3 px-4">
+      <router-link
+        to="#show-me"
+        class="bg-[#FAFAFA] hover:bg-slate-400 rounded-lg py-3 px-4"
+      >
         <span class="font-medium text-base">Show Me</span>
       </router-link>
     </div>
@@ -59,13 +62,10 @@ export default {
   },
   mounted() {
     axios
-      .get(
-        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university"
-      )
+      .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
       .then((response) => {
-        this.universities = response.data
+        this.universities = response.data;
       });
-      
   },
 };
 </script>
