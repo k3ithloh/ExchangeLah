@@ -7,9 +7,9 @@
       alt="Tokyo University"
       class="h-40 w-full rounded-md mb-2"
     />
-    <router-link to="/universityinfo">
+    <router-link :to="`/universityinfo/${university.universityName}`">
       <h4 class="font-semibold text-base mb-1 line-clamp-2">
-        {{ university.UniversityName }}
+        {{ university.universityName }}
       </h4>
     </router-link>
     <div class="flex items-center mb-1">
@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import countries from "@/Json/Countries.json";
-import regions from "@/Json/Regions.json";
+import axios from "axios";
 
 export default {
   name: "UniversityItem",
@@ -42,28 +41,42 @@ export default {
   },
   data() {
     return {
-      countryList: countries,
-      regionList: regions,
+      countryList: null,
+      regionList: null,
       country: null,
       region: null,
     }
   },
-  beforeMount() {
-    this.getCountry()
-    this.getRegion()
+  mounted() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"
+      )
+      .then((response) => {
+        this.regionList = response.data
+        this.getRegion();
+      });
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
+      )
+      .then((response) => {
+        this.countryList = response.data
+        this.getCountry();
+      });
   },
   methods: {
     getCountry: function () {
       for (var i = 0; i < this.countryList.length; i++) {
-        if (this.countryList[i].CountryId === this.university.CountryId){
-          this.country = this.countryList[i].CountryName
+        if (this.countryList[i].countryId === this.university.countryId){
+          this.country = this.countryList[i].countryName
         }
       }
     },
     getRegion: function () {
       for (var i = 0; i < this.regionList.length; i++) {
-        if (this.regionList[i].RegionId === this.university.RegionId){
-          this.region = this.regionList[i].RegionName
+        if (this.regionList[i].regionId === this.university.regionId){
+          this.region = this.regionList[i].regionName
         }
       }
     },

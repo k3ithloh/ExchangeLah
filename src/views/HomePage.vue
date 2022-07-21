@@ -11,7 +11,7 @@
       <div class="flex flex-wrap justify-center">
         <UniversityItem
           v-for="university in universities"
-          :key="university.id"
+          :key="university.universityName"
           :university="university"
         />
       </div>
@@ -36,10 +36,6 @@
           :key="university.id"
           :university="university"
         />
-        <!-- <UniversityCard :university="universities.university1" />
-        <UniversityCard :university="universities.university2" />
-        <UniversityCard :university="universities.university3" />
-        <UniversityCard :university="universities.university8" /> -->
       </div>
     </div>
   </div>
@@ -48,86 +44,29 @@
 <script>
 import UniversityItem from "@/components/UniversityItem.vue";
 import UniversityCard from "@/components/UniversityCard.vue";
-import UniList from "@/Json/Universities.json";
+import axios from "axios";
 
 export default {
   name: "HomePage",
   data() {
     return {
-      universities: UniList,
-      // universities: {
-      //   university1: {
-      //     id: "1",
-      //     name: "National University of Singapore",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university2: {
-      //     id: "2",
-      //     name: "Nanyang Technological University",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university3: {
-      //     id: "3",
-      //     name: "Singapore Management University",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university4: {
-      //     id: "4",
-      //     name: "Singapore University of Technology & Design",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university5: {
-      //     id: "5",
-      //     name: "Singapore Institute of Technology",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university6: {
-      //     id: "6",
-      //     name: "Singapore University of Social Sciences",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university7: {
-      //     id: "7",
-      //     name: "Seoul National University",
-      //     country: "South Korea",
-      //     city: "Seoul",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university8: {
-      //     id: "8",
-      //     name: "The University of Tokyo",
-      //     country: "Japan",
-      //     city: "Tokyo",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      // },
+      universities: null,
     };
   },
   components: {
     UniversityItem,
     UniversityCard,
   },
-  methods: {},
+  mounted() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university"
+      )
+      .then((response) => {
+        this.universities = response.data
+      });
+      
+  },
 };
 </script>
 

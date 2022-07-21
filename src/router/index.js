@@ -54,7 +54,7 @@ export const router = createRouter({
       component: ForgotPassword,
     },
     {
-      path: "/universityinfo",
+      path: "/universityinfo/:name",
       name: "UniversityInfo",
       component: UniversityInfo,
     },

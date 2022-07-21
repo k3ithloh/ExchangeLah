@@ -1,7 +1,7 @@
 <template>
   <div class="md:px-10">
     <h1 class="font-semibold text-xl pt-3 md:text-2xl">
-      {{ module.ModuleName }}
+      {{ module.moduleName }}
     </h1>
     <div>
       <div class="flex items-center mt-2">
@@ -23,7 +23,7 @@
           <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
           <i class="fa-solid fa-basket-shopping text-gray-400 ml-3"></i>
         </div>
-        <span class="ml-2 text-sm text-gray-600">{{ module.Faculty }}</span>
+        <span class="ml-2 text-sm text-gray-600">{{ module.faculty }}</span>
       </div>
     </div>
     <div class="grid md:grid-cols-[5fr_2fr] gap-4 rounded-xl">
@@ -32,7 +32,7 @@
               <div>
                 <span class="font-medium text-lg md:text-xl">Description</span>
                 <p class="mt-4 text-justify text-sm text-gray-800 md:text-base">
-                    {{ module.Description }}
+                    {{ module.description }}
                 </p>
               </div>
               <div>
@@ -50,7 +50,7 @@
             <div class="bg-zinc-50 rounded-2xl text-center p-4 my-6">
                 <span class="p-4">
                     <h1 class="md:text-4xl">
-                        {{ module.Difficulty }} / 5
+                        {{ module.difficulty }} / 5
                     </h1>
                     <h1>
                         Difficulty
@@ -58,7 +58,7 @@
                 </span>
                 <span class="p-4">
                     <h1 class="md:text-4xl">
-                        {{ module.Popularity }} / 5
+                        {{ module.popularity }} / 5
                     </h1>
                     <h1>
                         Popularity
@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import modules from "@/Json/Modules.json";
+import axios from "axios";
 
 export default {
   name: "UniversityInfo",
@@ -113,21 +113,20 @@ export default {
   },
   data() {
     return {
-      moduleList: modules,
       module: []
     };
   },
-  beforeMount() {
-    this.getModule()
+  mounted() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/" + this.$route.params.name
+      )
+      .then((response) => {
+        this.module = response.data
+        console.log(this.module)
+      });
   },
   methods: {
-        getModule: function () {
-          for (var i = 0; i < this.moduleList.length; i++){
-            if (this.moduleList[i].ModuleId === this.$route.params.name){
-              this.module = this.moduleList[i]
-            }
-          }
-      },
   },
 };
 </script>

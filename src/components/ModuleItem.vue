@@ -2,13 +2,13 @@
     <div
       class="flex justify-between mb-5 mx-5 min-w-[200px] border-4 rounded-2xl py-2 px-4 bg-white"
     >
-    <router-link :to="`/moduleinfo/${module.ModuleId}`">
+    <router-link :to="`/moduleinfo/${module.moduleId}`">
       <div>
           <h4 class="font-semibold text-base mb-1 line-clamp-2">
-              {{ module.ModuleName }} ({{ module.ModuleId }})
+              {{ module.moduleName }} ({{ module.moduleId }})
           </h4>
           <h4 class=" mb-1 line-clamp-2">
-              {{ module.UniversityName }} {{ module.basket }}
+              {{ module.universityName }} {{ module.basket }}
           </h4>
       </div>
     </router-link>

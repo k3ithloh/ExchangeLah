@@ -44,7 +44,7 @@
           <option
           v-for="university in universityList"
           :key="university">
-            {{ university.UniversityName }}
+            {{ university.universityName }}
           </option>
         </select>
       </div>
@@ -214,8 +214,7 @@
 <script>
 import ModuleItem from "@/components/ModuleItem.vue";
 import CartItem from "@/components/CartItem.vue";
-import universities from "@/Json/universities.json";
-import modules from "@/Json/Modules.json";
+import axios from "axios";
 
 export default {
   props: [],
@@ -224,9 +223,24 @@ export default {
     ModuleItem,
     CartItem,
   },
-  beforeMount() {
-    this.displayPage()
-    this.pageCounter()
+  mounted() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module"
+      )
+      .then((response) => {
+        this.moduleList = response.data
+        this.displayPage()
+        this.pageCounter()
+        console.log(this.moduleList)
+      });
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university"
+      )
+      .then((response) => {
+        this.universityList = response.data
+      });
   },
   methods: {
     pageCounter: function () {
@@ -273,7 +287,6 @@ export default {
             this.Baskets.splice(i, 1);
             this.selected.push(filter);
             i--;
-            console.log(filter)
           }
         }
     },
@@ -304,7 +317,7 @@ export default {
     moduleSelectByUni: function () {
       this.filteredList = []
       for (let i = 0; i < this.moduleList.length; i++){
-        if (this.moduleList[i].UniversityName === this.selectedUniversity){
+        if (this.moduleList[i].universityName === this.selectedUniversity){
           this.filteredList.push(this.moduleList[i])
         }
       }
@@ -318,111 +331,13 @@ export default {
       currentPage: 1,
       modPerPage: 30,
       pageCount: 1,
-      universityList: universities,
+      universityList: null,
       selectedUniversity: null,
       showFilter: false,
       cart: [],
       isBasketOpen: false,
-      moduleList: modules,
+      moduleList: null,
       filteredList: [],
-      // modules: [
-      //   {
-      //     id: "1",
-      //     basket: "IS",
-      //     name: "IS110",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS110",
-      //     difficulty: "5/5",
-      //     popularity: "1.5/5",
-      //   },
-      //   {
-      //     id: "2",
-      //     basket: "IS",
-      //     name: "IS111",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS111",
-      //     difficulty: "1/5",
-      //     popularity: "4/5",
-      //   },
-      //   {
-      //     id: "3",
-      //     basket: "IS",
-      //     name: "IS211",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS211",
-      //     difficulty: "2/5",
-      //     popularity: "3/5",
-      //   },
-      //   {
-      //     id: "4",
-      //     name: "IS210",
-      //     basket: "IS",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS210",
-      //     difficulty: "1/5",
-      //     popularity: "2.5/5",
-      //   },
-      //   {
-      //     id: "5",
-      //     basket: "Core",
-      //     name: "IS311",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS311",
-      //     difficulty: "5/5",
-      //     popularity: "4.5/5",
-      //   },
-      //   {
-      //     id: "6",
-      //     basket: "Core",
-      //     name: "IS312",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS312",
-      //     difficulty: "2/5",
-      //     popularity: "3.5/5",
-      //   },
-      //   {
-      //     id: "7",
-      //     basket: "Core",
-      //     name: "IS314",
-      //     country: "South Korea",
-      //     city: "Seoul",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS314",
-      //     difficulty: "4/5",
-      //     popularity: "2.5/5",
-      //   },
-      //   {
-      //     id: "8",
-      //     basket: "Core",
-      //     name: "IS315",
-      //     country: "Japan",
-      //     city: "Tokyo",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //     description: "description on IS315",
-      //     difficulty: "5/5",
-      //     popularity: "3.5/5",
-      //   },
-      // ],
       Baskets: [
         {
           id: 1,

@@ -167,8 +167,7 @@
 
 <script>
 import UniversityItem from "@/components/UniversityItem.vue";
-import UniList from "@/Json/Universities.json";
-import regions from "@/Json/Regions.json";
+import axios from "axios";
 
 export default {
   props: [],
@@ -176,17 +175,31 @@ export default {
   components: {
     UniversityItem,
   },
-  beforeMount() {
-    this.displayPage()
-    this.pageCounter()
-    this.createLocationFilter()
+  created() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university"
+      )
+      .then((response) => {
+        this.universities = response.data
+        this.displayPage()
+        this.pageCounter()
+      });
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"
+      )
+      .then((response) => {
+        this.regionList = response.data
+        this.createLocationFilter()
+      });
   },
   methods: {
     createLocationFilter: function (){
       for (var i = 0; i < this.regionList.length; i ++){
         var tempObj = {
           id: i,
-          name: this.regionList[i].RegionName,
+          name: this.regionList[i].regionName,
           checked: true,
           category: "Location",
         }
@@ -297,80 +310,14 @@ export default {
   },
   data() {
     return {
-      regionList: regions,
+      regionList: null,
       display: "",
       currentPage: 1,
       uniPerPage: 1,
       pageCount: 1,
       isLocationOpen: false,
       isPriceOpen: false,
-      universities: UniList,
-      // universities: {
-      //   university1: {
-      //     id: "1",
-      //     name: "National University of Singapore",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university2: {
-      //     id: "2",
-      //     name: "Nanyang Technological University Nanyang Technological University",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university3: {
-      //     id: "3",
-      //     name: "Singapore Management University",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university4: {
-      //     id: "4",
-      //     name: "Singapore University of Technology & Design",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university5: {
-      //     id: "5",
-      //     name: "Singapore Institute of Technology",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university6: {
-      //     id: "6",
-      //     name: "Singapore University of Social Sciences",
-      //     country: "Singapore",
-      //     city: "Singapore",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university7: {
-      //     id: "7",
-      //     name: "Seoul National University",
-      //     country: "South Korea",
-      //     city: "Seoul",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      //   university8: {
-      //     id: "8",
-      //     name: "The University of Tokyo",
-      //     country: "Japan",
-      //     city: "Tokyo",
-      //     rating: "4.6",
-      //     imgURL: "",
-      //   },
-      // },
+      universities: null,
       LocationFilters: [],
       PriceFilters: [
         {

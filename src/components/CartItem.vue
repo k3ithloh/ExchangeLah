@@ -4,10 +4,10 @@
   >
     <div>
         <h4 class="font-semibold text-base mb-1 line-clamp-2">
-            {{ module.name }}
+            {{ module.moduleName }}
         </h4>
         <h4 class=" mb-1 line-clamp-2">
-            {{ module.basket }}
+            {{ module.moduleId }}
         </h4>
     </div>
     <span>
