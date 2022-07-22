@@ -115,12 +115,11 @@
       </div>
     </div>
     <div class="grid md:grid-cols-[5fr_2fr] gap-4 rounded-xl">
-      <div class="">
+      <div class="m-4">
         <div
-          class="flex justify-between border-b-2 border-black text-4xl font-semibold m-4 p-2"
+          class="flex justify-between border-b-2 border-black text-4xl font-semibold p-2"
         >
           <h1 class="md:text-4xl text-xl font-semibold">All Modules</h1>
-
           <div class="text-base flex items-center">
             <h6>Sort By:</h6>
             <div class="border-2 flex justify-center items-center rounded-xl">
@@ -132,6 +131,10 @@
               </select>
             </div>
           </div>
+        </div>
+        <div class="my-4">
+          <span class="font-semibold">Search Module: </span>
+          <input v-model="moduleEntry" placeholder="Enter Module Name" type="text" class="w-2/3 rounded-xl mx-4 px-4" @input="moduleSearch">
         </div>
         <div v-if="filteredList.length === 0">
           <h1
@@ -220,8 +223,7 @@
         <button
           @click="
             this.currentPage = pageCount;
-            displayPage(this.currentPage);
-          "
+            displayPage(this.currentPage);"
         >
           <i class="fa-solid fa-angles-right"></i>
         </button>
@@ -242,6 +244,9 @@ export default {
     ModuleItem,
     CartItem,
   },
+  updated() {
+
+  },
   mounted() {
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module")
@@ -249,7 +254,6 @@ export default {
         this.moduleList = response.data;
         this.displayPage();
         this.pageCounter();
-        console.log(this.moduleList);
       });
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
@@ -258,6 +262,24 @@ export default {
       });
   },
   methods: {
+    moduleSearch: function () {
+      if(this.moduleEntry !== ""){
+        axios
+          .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" + this.moduleEntry)
+          .then((response) => {
+            let data = response.data
+            let newDisplay = []
+            for(let i = 0; i < data.length; i++){
+              if(data[i].universityName === this.selectedUniversity){
+                newDisplay.push(data[i])
+              }
+            }
+            this.filteredList = newDisplay
+            this.displayPage();
+            this.pageCounter();
+          });
+      }
+    },
     pageCounter: function () {
       this.pageCount = Math.ceil(
         Object.keys(this.filteredList).length / this.modPerPage
@@ -346,6 +368,7 @@ export default {
   },
   data() {
     return {
+      moduleEntry: "",
       display: [],
       currentPage: 1,
       modPerPage: 30,

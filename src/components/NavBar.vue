@@ -84,22 +84,37 @@
       <img src="../assets/img/logo.png" class="h-10 lg:h-12" />
     </router-link>
     <form
-      class="flex justify-center items-center border border-slate-300 rounded-md shadow-md focus:outline-none md:text-md mb-4"
+      class="flex flex-col"
     >
-      <span class="left-0 items-center ml-3 h-fit">
-        <i class="fa-solid h-4 w-4 fa-magnifying-glass text-[#2D3D8F]"></i>
-      </span>
-      <input
-        class="placeholder:italic placeholder:text-slate-400 block bg-slate-100 w-72 sm:w-80 md:w-80 lg:w-96 py-3 pl-5 pr-5 outline-none"
-        placeholder="Search university..."
-        @input="search"
-        type="text"
-        name="search"
-      />
-      <button type="reset" class="right-0 flex items-center mr-3 h-fit">
-        <i class="fa-solid fa-xmark h-4 w-4 text-[#2D3D8F]"></i>
-      </button>
+      <div class="flex justify-center items-center border border-slate-300 rounded-md shadow-md focus:outline-none md:text-md mb-4">
+        <span class="left-0 items-center ml-3 h-fit">
+          <i class="fa-solid h-4 w-4 fa-magnifying-glass text-[#2D3D8F]"></i>
+        </span>
+        <input
+          class="placeholder:italic placeholder:text-slate-400 block bg-slate-100 w-72 sm:w-80 md:w-80 lg:w-96 py-3 pl-5 pr-5 outline-none"
+          placeholder="Search university..."
+          v-model="searchUni"
+          @input="search"
+          type="text"
+          name="search"
+        />
+        <button type="reset" class="right-0 flex items-center mr-3 h-fit" @click="searchList = []">
+          <i class="fa-solid fa-xmark h-4 w-4 text-[#2D3D8F]"></i>
+        </button>
+        </div>
+      <div class="w-full bg-gray-500">
+        <div class="fixed bg-white ">
+          <div v-for="(university,i) in searchList" :key="i" class="flex p-2 border-b-2 border-black">
+            <!-- Cannot use Router link here because page does not refresh -->
+            <a :href="`/universityinfo/${university.universityName}`" @click="searchList = []; searchUni=''">
+              <img :src="university.icon" class="h-10 w-10">
+              <span>{{ university.universityName }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </form>
+
     <div class="hidden md:flex items-center justify-end">
       <router-link
         to="/login"
@@ -149,15 +164,40 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       navBar: true,
+      searchUni: "",
+      searchList: [],
+      maxDisplay: 5,
     };
   },
   methods: {
     search: function () {
-      alert("Searching");
+      if(this.searchUni !== ""){
+        axios
+          .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/search/" + this.searchUni)
+          .then((response) => {
+            this.searchList = []
+            let data = response.data
+            let counter = 0
+            for(let i = 0; i < data.length; i++){
+              if (counter === this.maxDisplay){
+                break
+              }
+              else {
+                this.searchList.push(data[i])
+              }
+            }
+            console.log(this.searchList)
+          });
+      }
+      else{
+        this.searchList = []
+      }
     },
   },
 };

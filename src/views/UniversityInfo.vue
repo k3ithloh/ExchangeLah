@@ -1,7 +1,7 @@
 <template>
   <div class="md:px-10">
     <h1 class="font-semibold text-xl pt-3 md:text-2xl">
-      {{ university.universityName }}
+      {{ university.universityName}}
     </h1>
     <div>
       <div class="flex items-center mt-2">
@@ -72,9 +72,7 @@
       <span class="font-medium text-lg md:text-xl p-5">Requirements</span>
       <div class="flex justify-around p-5 items-center">
         <div class="flex flex-col items-center">
-          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">
-            {{ university.gpaRequirement }}
-          </h3>
+          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">{{ university.gpaRequirement }}</h3>
           <span class="pt-2 text-sm md:text-base font-normal">Minimum GPA</span>
         </div>
         <div class="flex flex-col items-center">
@@ -82,29 +80,15 @@
           <span class="pt-2 text-sm md:text-base font-normal">Visa</span>
         </div>
         <div class="flex flex-col items-center">
-          <h3
-            v-if="university.accommodation"
-            class="font-medium text-[#648FB9] text-xl md:text-2xl"
-          >
-            Yes
-          </h3>
-          <h3 v-else class="font-medium text-[#648FB9] text-xl md:text-2xl">
-            No
-          </h3>
+          <h3 v-if="university.accommodation" class="font-medium text-[#648FB9] text-xl md:text-2xl">Yes</h3>
+          <h3 v-else class="font-medium text-[#648FB9] text-xl md:text-2xl">No</h3>
           <span class="pt-2 text-sm md:text-base font-normal"
             >Accomodation</span
           >
         </div>
         <div class="flex flex-col items-center">
-          <h3
-            v-if="university.insurance"
-            class="font-medium text-[#648FB9] text-xl md:text-2xl"
-          >
-            Yes
-          </h3>
-          <h3 v-else class="font-medium text-[#648FB9] text-xl md:text-2xl">
-            No
-          </h3>
+          <h3 v-if="university.insurance" class="font-medium text-[#648FB9] text-xl md:text-2xl">Yes</h3>
+          <h3 v-else class="font-medium text-[#648FB9] text-xl md:text-2xl">No</h3>
           <span class="pt-2 text-sm md:text-base font-normal">Insurance</span>
         </div>
       </div>
@@ -141,7 +125,15 @@ export default {
     };
   },
   mounted() {
-    this.getUniversities();
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/" + this.$route.params.name
+      )
+      .then((response) => {
+        this.university = response.data
+        console.log(this.university)
+
+      });
     this.createMap();
   },
   methods: {
@@ -160,17 +152,6 @@ export default {
       } catch (err) {
         console.log("map error", err);
       }
-    },
-    async getUniversities() {
-      axios
-        .get(
-          "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/" +
-            this.$route.params.name
-        )
-        .then((response) => {
-          this.university = response.data;
-          console.log(this.university);
-        });
     },
   },
 };
