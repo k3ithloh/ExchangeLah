@@ -7,15 +7,16 @@
     leave-from-class="scale-x-100 opacity-100"
     leave-to-class="scale-x-50 opacity-0"
   >
-    <div v-if="showFilter" class="fixed bg-slate-100/80 top-0 right-0 bottom-0 left-0">
-      <div class="bg-white mb-4 rounded-xl fixed h-full w-3/4 overflow-y-auto top-0 right-0 opacity-100">
+    <div
+      v-if="showFilter"
+      class="fixed bg-slate-100/80 top-0 right-0 bottom-0 left-0"
+    >
+      <div
+        class="bg-white mb-4 rounded-xl fixed h-full w-3/4 overflow-y-auto top-0 right-0 opacity-100"
+      >
         <div class="flex justify-between m-4">
-          <h1 class=" font-semibold">
-            Module Cart
-          </h1>
-          <button @click="clearCart()">
-            Clear
-          </button>
+          <h1 class="font-semibold">Module Cart</h1>
+          <button @click="clearCart()">Clear</button>
         </div>
         <div class="flex flex-col">
           <CartItem
@@ -25,11 +26,12 @@
             :cart="this.cart"
           />
         </div>
-        <button class="float-left bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4">
+        <button
+          class="float-left bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4"
+        >
           <i class="fa-solid fa-magnifying-glass"></i>
           Search University
         </button>
-
       </div>
     </div>
   </transition>
@@ -38,6 +40,14 @@
     <div
       class="bg-white flex flex-col rounded-xl md:h-3/4 md:fixed md:overflow-y-scroll md:w-1/4"
     >
+      <div>
+        <h3 class="p-2">Choose Your University</h3>
+        <select v-model="selectedUniversity" @change="moduleSelectByUni()">
+          <option v-for="university in universityList" :key="university">
+            {{ university.universityName }}
+          </option>
+        </select>
+      </div>
       <div class="flex justify-between p-2">
         <h3 class="font-semibold">Selected</h3>
         <button @click="clearFilter()" class="text-xs">Clear</button>
@@ -105,11 +115,11 @@
       </div>
     </div>
     <div class="grid md:grid-cols-[5fr_2fr] gap-4 rounded-xl">
-      <div class="">
-        <div class="flex justify-between border-b-2 border-black text-4xl font-semibold m-4 p-2">
-          <h1 class="md:text-4xl text-xl font-semibold">
-          All Modules
-          </h1>
+      <div class="m-4">
+        <div
+          class="flex justify-between border-b-2 border-black text-4xl font-semibold p-2"
+        >
+          <h1 class="md:text-4xl text-xl font-semibold">All Modules</h1>
           <div class="text-base flex items-center">
             <h6>Sort By:</h6>
             <div class="border-2 flex justify-center items-center rounded-xl">
@@ -122,9 +132,20 @@
             </div>
           </div>
         </div>
-        <div class="w-full">
+        <div class="my-4">
+          <span class="font-semibold">Search Module: </span>
+          <input v-model="moduleEntry" placeholder="Enter Module Name" type="text" class="w-2/3 rounded-xl mx-4 px-4" @input="moduleSearch">
+        </div>
+        <div v-if="filteredList.length === 0">
+          <h1
+            class="text-2xl font font-semibold flex p-4 border-4 justify-center"
+          >
+            Please select an University to begin
+          </h1>
+        </div>
+        <div v-else class="w-full">
           <ModuleItem
-            v-for="module in modules"
+            v-for="module in display"
             :key="module.id"
             :module="module"
             :cart="this.cart"
@@ -132,19 +153,18 @@
         </div>
       </div>
       <div class="flex flex-col">
-        <div @click="showFilter = !showFilter" class="fixed text-xl right-6 bottom-6 md:hidden bg-blue-300 rounded-full px-4 py-3">
+        <div
+          @click="showFilter = !showFilter"
+          class="fixed text-xl right-6 bottom-6 md:hidden bg-blue-300 rounded-full px-4 py-3"
+        >
           <span>
             <i class="fa-solid fa-cart-shopping"></i>
           </span>
         </div>
         <div class="bg-white mb-4 rounded-xl hidden md:block">
           <div class="flex justify-between m-4">
-            <h1 class=" font-semibold">
-              Module Cart
-            </h1>
-            <button @click="clearCart()">
-              Clear
-            </button>
+            <h1 class="font-semibold">Module Cart</h1>
+            <button @click="clearCart()">Clear</button>
           </div>
           <div class="flex flex-col">
             <CartItem
@@ -154,19 +174,59 @@
               :cart="this.cart"
             />
           </div>
-          <button class=" float-right bottom-0 bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4">
+          <button
+            class="float-right bottom-0 bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4"
+          >
             <i class="fa-solid fa-magnifying-glass"></i>
             Search University
           </button>
         </div>
-        <div class="bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px]">
+        <div
+          class="bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px]"
+        >
           <h1 class="font-semibold text-2xl text-center my-5 px-20">
             Don't Know Which Modules to Choose?
           </h1>
-          <router-link to="#show-me" class="bg-[#FAFAFA] rounded-lg py-3 px-4 mb-4 hover:bg-slate-400">
+          <router-link
+            to="#show-me"
+            class="bg-[#FAFAFA] rounded-lg py-3 px-4 mb-4 hover:bg-slate-400"
+          >
             <span class="font-medium text-base">Show Me</span>
           </router-link>
         </div>
+      </div>
+      <div class="flex justify-end pb-4 pr-4 text-xl">
+        <button
+          @click="
+            this.currentPage = 1;
+            displayPage(this.currentPage);
+          "
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
+        <div v-for="i in displayPages(this.currentPage)" :key="i">
+          <button
+            v-if="i === currentPage"
+            @click="displayPage(i)"
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-500"
+          >
+            {{ i }}
+          </button>
+          <button
+            v-else
+            @click="displayPage(i)"
+            class="border-2 mx-1 px-2 rounded-2xl bg-blue-300"
+          >
+            {{ i }}
+          </button>
+        </div>
+        <button
+          @click="
+            this.currentPage = pageCount;
+            displayPage(this.currentPage);"
+        >
+          <i class="fa-solid fa-angles-right"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -175,6 +235,7 @@
 <script>
 import ModuleItem from "@/components/ModuleItem.vue";
 import CartItem from "@/components/CartItem.vue";
+import axios from "axios";
 
 export default {
   props: [],
@@ -183,18 +244,92 @@ export default {
     ModuleItem,
     CartItem,
   },
+  updated() {
+
+  },
+  mounted() {
+    axios
+      .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module")
+      .then((response) => {
+        this.moduleList = response.data;
+        this.displayPage();
+        this.pageCounter();
+      });
+    axios
+      .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
+      .then((response) => {
+        this.universityList = response.data;
+      });
+  },
   methods: {
+    moduleSearch: function () {
+      if(this.moduleEntry !== ""){
+        axios
+          .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" + this.moduleEntry)
+          .then((response) => {
+            let data = response.data
+            let newDisplay = []
+            for(let i = 0; i < data.length; i++){
+              if(data[i].universityName === this.selectedUniversity){
+                newDisplay.push(data[i])
+              }
+            }
+            this.filteredList = newDisplay
+            this.displayPage();
+            this.pageCounter();
+          });
+      }
+    },
+    pageCounter: function () {
+      this.pageCount = Math.ceil(
+        Object.keys(this.filteredList).length / this.modPerPage
+      );
+    },
+    displayPage: function (page) {
+      this.currentPage = page ? page : 1;
+      this.display = [];
+      let counter = 1;
+      let loopStart = this.modPerPage * this.currentPage - this.modPerPage + 1;
+      let keys = Object.keys(this.filteredList);
+      for (let i = 1; i <= Object.keys(this.filteredList).length; i++) {
+        if (i === loopStart && counter <= this.modPerPage) {
+          this.display.push(this.filteredList[keys[i - 1]]);
+          loopStart++;
+          counter++;
+        }
+      }
+    },
+    displayPages: function (page) {
+      let numDisplay = [];
+      if (page === 1) {
+        for (let i = page; i <= Math.min(page + 3, this.pageCount); i++) {
+          numDisplay.push(i);
+        }
+      } else if (page >= this.pageCount - 1) {
+        for (
+          let i = Math.max(this.pageCount - 3, 1);
+          i <= Math.min(page + 3, this.pageCount);
+          i++
+        ) {
+          numDisplay.push(i);
+        }
+      } else {
+        for (let i = page - 1; i <= Math.min(page + 2, this.pageCount); i++) {
+          numDisplay.push(i);
+        }
+      }
+      return numDisplay;
+    },
     // Find a better way to add abd remove filters without having to manually add in each filter to each function
 
     addToFilter: function (filter) {
-        for (var i = 0; i < this.Baskets.length; i++) {
-          if (this.Baskets[i] === filter) {
-            this.Baskets.splice(i, 1);
-            this.selected.push(filter);
-            i--;
-            console.log(filter)
-          }
+      for (var i = 0; i < this.Baskets.length; i++) {
+        if (this.Baskets[i] === filter) {
+          this.Baskets.splice(i, 1);
+          this.selected.push(filter);
+          i--;
         }
+      }
     },
     removeFilter: function (select) {
       for (var i = 0; i < this.selected.length; i++) {
@@ -218,112 +353,33 @@ export default {
       this.selected = [];
     },
     clearCart: function () {
-      this.cart = []
+      this.cart = [];
+    },
+    moduleSelectByUni: function () {
+      this.filteredList = [];
+      for (let i = 0; i < this.moduleList.length; i++) {
+        if (this.moduleList[i].universityName === this.selectedUniversity) {
+          this.filteredList.push(this.moduleList[i]);
+        }
+      }
+      this.displayPage();
+      this.pageCounter();
     },
   },
   data() {
     return {
+      moduleEntry: "",
+      display: [],
+      currentPage: 1,
+      modPerPage: 30,
+      pageCount: 1,
+      universityList: null,
+      selectedUniversity: null,
       showFilter: false,
       cart: [],
       isBasketOpen: false,
-      modules: [
-        {
-          id: "1",
-          basket: "IS",
-          name: "IS110",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS110",
-          difficulty: "5/5",
-          popularity: "1.5/5",
-        },
-        {
-          id: "2",
-          basket: "IS",
-          name: "IS111",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS111",
-          difficulty: "1/5",
-          popularity: "4/5",
-        },
-        {
-          id: "3",
-          basket: "IS",
-          name: "IS211",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS211",
-          difficulty: "2/5",
-          popularity: "3/5",
-        },
-        {
-          id: "4",
-          name: "IS210",
-          basket: "IS",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS210",
-          difficulty: "1/5",
-          popularity: "2.5/5",
-        },
-        {
-          id: "5",
-          basket: "Core",
-          name: "IS311",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS311",
-          difficulty: "5/5",
-          popularity: "4.5/5",
-        },
-        {
-          id: "6",
-          basket: "Core",
-          name: "IS312",
-          country: "Singapore",
-          city: "Singapore",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS312",
-          difficulty: "2/5",
-          popularity: "3.5/5",
-        },
-        {
-          id: "7",
-          basket: "Core",
-          name: "IS314",
-          country: "South Korea",
-          city: "Seoul",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS314",
-          difficulty: "4/5",
-          popularity: "2.5/5",
-        },
-        {
-          id: "8",
-          basket: "Core",
-          name: "IS315",
-          country: "Japan",
-          city: "Tokyo",
-          rating: "4.6",
-          imgURL: "",
-          description: "description on IS315",
-          difficulty: "5/5",
-          popularity: "3.5/5",
-        },
-      ],
+      moduleList: null,
+      filteredList: [],
       Baskets: [
         {
           id: 1,

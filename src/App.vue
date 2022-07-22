@@ -2,6 +2,7 @@
   <div>
     <NavBar />
     <router-view class="px-8"></router-view>
+    <!-- {{ response }} -->
   </div>
 </template>
 

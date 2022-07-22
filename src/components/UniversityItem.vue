@@ -7,15 +7,15 @@
       alt="Tokyo University"
       class="h-40 w-full rounded-md mb-2"
     />
-    <router-link to="/universityinfo">
+    <router-link :to="`/universityinfo/${university.universityName}`">
       <h4 class="font-semibold text-base mb-1 line-clamp-2">
-        {{ university.name }}
+        {{ university.universityName }}
       </h4>
     </router-link>
     <div class="flex items-center mb-1">
       <i class="fa-solid fa-location-dot text-gray-300 mr-2"></i>
       <span class="font-regular text-sm text-gray-400"
-        >{{ university.city }}, {{ university.country }}</span
+        >{{ region }}, {{ country }}</span
       >
     </div>
     <div class="flex items-center">
@@ -32,11 +32,56 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "UniversityItem",
   props: {
     university: { type: Object },
   },
+  data() {
+    return {
+      countryList: null,
+      regionList: null,
+      country: null,
+      region: null,
+    }
+  },
+  mounted() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"
+      )
+      .then((response) => {
+        this.regionList = response.data
+        this.getRegion();
+      });
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
+      )
+      .then((response) => {
+        this.countryList = response.data
+        this.getCountry();
+      });
+  },
+  methods: {
+    getCountry: function () {
+      for (var i = 0; i < this.countryList.length; i++) {
+        if (this.countryList[i].countryId === this.university.countryId){
+          this.country = this.countryList[i].countryName
+        }
+      }
+    },
+    getRegion: function () {
+      for (var i = 0; i < this.regionList.length; i++) {
+        if (this.regionList[i].regionId === this.university.regionId){
+          this.region = this.regionList[i].regionName
+        }
+      }
+    },
+
+  }
 };
 </script>
 

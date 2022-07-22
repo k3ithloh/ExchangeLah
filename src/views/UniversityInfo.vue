@@ -1,7 +1,7 @@
 <template>
   <div class="md:px-10">
     <h1 class="font-semibold text-xl pt-3 md:text-2xl">
-      The University of Tokyo
+      {{ university.universityName}}
     </h1>
     <div>
       <div class="flex items-center mt-2">
@@ -65,32 +65,14 @@
     <div class="card rounded-md bg-zinc-50 p-5 mx-auto w-full my-6">
       <span class="font-medium text-lg md:text-xl">Description</span>
       <p class="mt-4 text-justify text-sm text-gray-800 md:text-base">
-        The University of Tokyo, abbreviated as Todai or UTokyo, is a public
-        research university located in Bunkyō, Tokyo, Japan. Established in
-        1877, the university is the first Imperial University and currently
-        selected as a Top Type university of Top Global University Project by
-        the Japanese government. University of Tokyo (Todai) is considered to be
-        the most selective and prestigious university in Japan and is counted as
-        one of the best universities in the world.
-      </p>
-      <p class="mt-3 text-justify text-sm text-gray-800 md:text-base">
-        UTokyo has 10 faculties, 15 graduate schools and enrolls about 30,000
-        students, about 4,200 of whom are international students. In particular,
-        the number of privately funded international students, who account for
-        more than 80%, has increased 1.75 times in the 10 years since 2010, and
-        the university is focusing on supporting international students. Its
-        five campuses are in Hongō, Komaba, Kashiwa, Shirokane and Nakano. It is
-        considered to be the most selective and prestigious university in Japan.
-        As of 2021, University of Tokyo's alumni, faculty members and
-        researchers include seventeen Prime Ministers, 18 Nobel Prize laureates,
-        four Pritzker Prize laureates, five astronauts, and a Fields Medalist.
+        {{ university.description }}
       </p>
     </div>
     <div>
       <span class="font-medium text-lg md:text-xl p-5">Requirements</span>
       <div class="flex justify-around p-5 items-center">
         <div class="flex flex-col items-center">
-          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">3.4</h3>
+          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">{{ university.gpaRequirement }}</h3>
           <span class="pt-2 text-sm md:text-base font-normal">Minimum GPA</span>
         </div>
         <div class="flex flex-col items-center">
@@ -98,13 +80,15 @@
           <span class="pt-2 text-sm md:text-base font-normal">Visa</span>
         </div>
         <div class="flex flex-col items-center">
-          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">Yes</h3>
+          <h3 v-if="university.accommodation" class="font-medium text-[#648FB9] text-xl md:text-2xl">Yes</h3>
+          <h3 v-else class="font-medium text-[#648FB9] text-xl md:text-2xl">No</h3>
           <span class="pt-2 text-sm md:text-base font-normal"
             >Accomodation</span
           >
         </div>
         <div class="flex flex-col items-center">
-          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">Yes</h3>
+          <h3 v-if="university.insurance" class="font-medium text-[#648FB9] text-xl md:text-2xl">Yes</h3>
+          <h3 v-else class="font-medium text-[#648FB9] text-xl md:text-2xl">No</h3>
           <span class="pt-2 text-sm md:text-base font-normal">Insurance</span>
         </div>
       </div>
@@ -127,6 +111,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import mapboxgl from "mapbox-gl";
 
 export default {
@@ -134,11 +119,21 @@ export default {
   components: {},
   data() {
     return {
+      university: "",
       accessToken:
         "pk.eyJ1IjoiYmVuamluZ2t0IiwiYSI6ImNrcHAzN2dhajA0Nm4ydW55bnk3ZjUzOWMifQ.UyhnflaD8sOuIdhbzEptKQ",
     };
   },
   mounted() {
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/" + this.$route.params.name
+      )
+      .then((response) => {
+        this.university = response.data
+        console.log(this.university)
+
+      });
     this.createMap();
   },
   methods: {
