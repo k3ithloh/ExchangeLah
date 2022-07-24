@@ -10,7 +10,7 @@
       </h1>
       <div class="flex flex-wrap justify-center">
         <UniversityItem
-          v-for="university in universities"
+          v-for="university in universities.slice(0, 8)"
           :key="university.universityName"
           :university="university"
         />
@@ -35,7 +35,7 @@
       </h3>
       <div>
         <UniversityCard
-          v-for="university in universities"
+          v-for="university in universities.slice(0,4)"
           :key="university.id"
           :university="university"
         />
@@ -53,14 +53,14 @@ export default {
   name: "HomePage",
   data() {
     return {
-      universities: null,
+      universities: [],
     };
   },
   components: {
     UniversityItem,
     UniversityCard,
   },
-  mounted() {
+  created() {
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
       .then((response) => {

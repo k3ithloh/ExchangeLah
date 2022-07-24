@@ -26,32 +26,32 @@
 
       <div class="mt-4 h-full sm:grid sm:grid-cols-7 sm:grid-rows-3 sm:gap-5">
         <img
-          src="../assets/img/tokyo_university.jpeg"
+          :src="university.img1"
           alt="Tokyo University"
           class="h-full sm:row-start-1 sm:row-end-4 sm:col-start-1 sm:col-end-4 rounded-md mb-2"
         />
         <img
-          src="../assets/img/tokyo_university.jpeg"
+          :src="university.img2"
           alt="Tokyo University"
           class="h-full sm:row-start-1 sm:row-end-3 sm:col-start-4 sm:col-end-5 rounded-md mb-2"
         />
         <img
-          src="../assets/img/tokyo_university.jpeg"
+          :src="university.img3"
           alt="Tokyo University"
           class="h-full sm:row-start-3 sm:row-end-4 sm:col-start-4 sm:col-end-5 rounded-md mb-2"
         />
         <img
-          src="../assets/img/tokyo_university.jpeg"
+          :src="university.img4"
           alt="Tokyo University"
           class="hidden h-full sm:row-start-1 sm:row-end-2 sm:col-start-5 sm:col-end-6 rounded-md mb-2 sm:flex"
         />
         <img
-          src="../assets/img/tokyo_university.jpeg"
+          :src="university.img5"
           alt="Tokyo University"
           class="hidden h-full sm:row-start-2 sm:row-end-4 sm:col-start-5 sm:col-end-6 rounded-md mb-2 sm:flex"
         />
         <img
-          src="../assets/img/tokyo_university.jpeg"
+          :src="university.img6"
           alt="Tokyo University"
           class="hidden h-full sm:row-start-1 sm:row-end-3 sm:col-start-6 sm:col-end-8 rounded-md mb-2 sm:flex"
         />

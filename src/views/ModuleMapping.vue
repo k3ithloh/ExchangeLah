@@ -120,17 +120,6 @@
           class="flex justify-between border-b-2 border-black text-4xl font-semibold p-2"
         >
           <h1 class="md:text-4xl text-xl font-semibold">All Modules</h1>
-          <div class="text-base flex items-center">
-            <h6>Sort By:</h6>
-            <div class="border-2 flex justify-center items-center rounded-xl">
-              <select @change="sort(value)" id="sortBy" name="selections">
-                <option value="alphabertical">A-Z</option>
-                <option value="reversedAlphabertical">Z-A</option>
-                <option value="Option 1">Price</option>
-                <option value="Option 1">Distance</option>
-              </select>
-            </div>
-          </div>
         </div>
         <div class="my-4">
           <span class="font-semibold">Search Module: </span>
@@ -178,7 +167,7 @@
             class="float-right bottom-0 bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4"
           >
             <i class="fa-solid fa-magnifying-glass"></i>
-            Search University
+            Search Module
           </button>
         </div>
         <div

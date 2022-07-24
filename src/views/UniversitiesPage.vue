@@ -69,45 +69,6 @@
           </div>
         </transition>
       </div>
-      <div class="p-2">
-        <button
-          @click="isPriceOpen = !isPriceOpen"
-          class="flex items-center space-x-4"
-        >
-          <h6>Price</h6>
-          <span v-if="isPriceOpen">
-            <i class="fa-solid fa-angle-down"></i>
-          </span>
-          <span v-else>
-            <i class="fa-solid fa-angle-up"></i>
-          </span>
-        </button>
-        <transition
-          enter-active-class="duration-500 transform transition ease-in-out origin-top "
-          enter-from-class="scale-y-0 opacity-0"
-          enter-to-class="scale-y-100 opacity-100 "
-          leave-active-class="duration-200 transform ease-in-out origin-top"
-          leave-from-class="scale-y-100 opacity-100"
-          leave-to-class="scale-y-50 opacity-0"
-        >
-          <div v-if="isPriceOpen" class="flex flex-col">
-            <div
-              v-for="filter in PriceFilters"
-              :key="filter.id"
-              class="bg-[#D5E2EE] text-[#89939E] rounded-xl w-auto m-2 px-3 py-1"
-            >
-              <label class="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  @click="addToFilter(filter)"
-                  class="ml-2"
-                />
-                <span>{{ filter.name }}</span>
-              </label>
-            </div>
-          </div>
-        </transition>
-      </div>
     </div>
     <!-- sorting not built yet -->
     <div class="bg-white">
@@ -115,17 +76,6 @@
         class="flex justify-between border-b-2 border-black sm:text-4xl font-semibold m-4 p-2 text-xl"
       >
         <h1>All Universities</h1>
-        <div class="text-base flex items-center">
-          <h6>Sort By:</h6>
-          <div class="border-2 flex justify-center items-center rounded-xl">
-            <select @change="sort(value)" id="sortBy" name="selections">
-              <option value="alphabertical">A-Z</option>
-              <option value="reversedAlphabertical">Z-A</option>
-              <option value="Option 1">Price</option>
-              <option value="Option 1">Distance</option>
-            </select>
-          </div>
-        </div>
       </div>
       <!-- Add router link here or in the Card component? -->
       <div class="flex flex-wrap justify-center mt-4">
@@ -215,6 +165,7 @@ export default {
           name: this.regionList[i].regionName,
           checked: true,
           category: "Location",
+          regionId: this.regionList[i].regionId,
         };
         this.LocationFilters.push(tempObj);
       }
@@ -246,40 +197,38 @@ export default {
       );
     },
     displayPage: function (page) {
+      let finalList = []
+      if (this.selected.length !== 0){
+        let tempList = []
+        for (let y = 0; y < this.selected.length; y++){
+          tempList.push(this.selected[y].regionId)
+        }
+        console.log(tempList)
+        for (let x = 0; x < this.universities.length; x++){
+          if (tempList.includes(this.universities[x].regionId)){
+            finalList.push(this.universities[x])
+          }
+        }
+      }
+      else{
+        finalList = this.universities
+      }
       this.currentPage = page ? page : 1;
       this.display = [];
       let counter = 1;
       let loopStart = this.uniPerPage * this.currentPage - this.uniPerPage + 1;
-      let keys = Object.keys(this.universities);
-      for (let i = 1; i <= Object.keys(this.universities).length; i++) {
+      let keys = Object.keys(finalList);
+      for (let i = 1; i <= Object.keys(finalList).length; i++) {
         if (i === loopStart && counter <= this.uniPerPage) {
-          this.display.push(this.universities[keys[i - 1]]);
+          this.display.push(finalList[keys[i - 1]]);
           loopStart++;
           counter++;
         }
       }
     },
-    // Not sure how to make this sorting dropdown work
-    sort: function () {
-      var select = document.getElementById("sortBy");
-      var option = select.options[select.selectedIndex];
-      if (option.value === "alphabertical") {
-        alert(option.value);
-      } else if (option.value === "reversedAlphabertical") {
-        alert(option.value);
-      }
-    },
     // Find a better way to add abd remove filters without having to manually add in each filter to each function
     addToFilter: function (filter) {
-      if (filter.category === "Price") {
-        for (var i = 0; i < this.PriceFilters.length; i++) {
-          if (this.PriceFilters[i] === filter) {
-            this.PriceFilters.splice(i, 1);
-            this.selected.push(filter);
-            i--;
-          }
-        }
-      } else if (filter.category === "Location") {
+      if (filter.category === "Location") {
         for (var x = 0; x < this.LocationFilters.length; x++) {
           if (this.LocationFilters[x] === filter) {
             this.LocationFilters.splice(x, 1);
@@ -288,17 +237,15 @@ export default {
           }
         }
       }
+      this.displayPage()
+      this.displayPages()
+      this.pageCounter()
     },
     removeFilter: function (select) {
       for (var i = 0; i < this.selected.length; i++) {
         if (this.selected[i] === select) {
           this.selected.splice(i, 1);
-          if (select.category === "Price") {
-            this.PriceFilters.push(select);
-            this.PriceFilters.sort((a, b) => {
-              return a.id - b.id;
-            });
-          } else if (select.category === "Location") {
+          if (select.category === "Location") {
             this.LocationFilters.push(select);
             this.LocationFilters.sort((a, b) => {
               return a.id - b.id;
@@ -306,23 +253,22 @@ export default {
           }
         }
       }
+      this.displayPage()
+      this.displayPages()
+      this.pageCounter()
     },
     clearFilter: function () {
       for (var i = 0; i < this.selected.length; i++) {
         let item = this.selected[i];
-        if (item.category === "Price") {
-          this.PriceFilters.push(item);
-        } else if (item.category === "Location") {
+        if (item.category === "Location") {
           this.LocationFilters.push(item);
         }
       }
       this.LocationFilters.sort((a, b) => {
         return a.id - b.id;
       });
-      this.PriceFilters.sort((a, b) => {
-        return a.id - b.id;
-      });
       this.selected = [];
+      this.displayPage()
     },
   },
   data() {
@@ -330,38 +276,11 @@ export default {
       regionList: null,
       display: "",
       currentPage: 1,
-      uniPerPage: 1,
+      uniPerPage: 8,
       pageCount: 1,
       isLocationOpen: false,
-      isPriceOpen: false,
       universities: null,
       LocationFilters: [],
-      PriceFilters: [
-        {
-          id: 5,
-          name: "filter 5",
-          checked: true,
-          category: "Price",
-        },
-        {
-          id: 6,
-          name: "filter 6",
-          checked: true,
-          category: "Price",
-        },
-        {
-          id: 7,
-          name: "filter 7",
-          checked: true,
-          category: "Price",
-        },
-        {
-          id: 8,
-          name: "filter 8",
-          checked: true,
-          category: "Price",
-        },
-      ],
       selected: [],
     };
   },
