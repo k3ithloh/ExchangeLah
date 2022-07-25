@@ -163,7 +163,7 @@ export default {
       regionList: null,
       country: null,
       region: null,
-      universities: "",
+      university: "",
       accessToken:
         "pk.eyJ1IjoiYmVuamluZ2t0IiwiYSI6ImNrcHAzN2dhajA0Nm4ydW55bnk3ZjUzOWMifQ.UyhnflaD8sOuIdhbzEptKQ",
     };
@@ -185,7 +185,7 @@ export default {
           this.$route.params.name
       )
       .then((response) => {
-        this.universities = response.data;
+        this.university = response.data;
         this.getCountry();
         this.getRegion();
       });
