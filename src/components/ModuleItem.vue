@@ -13,9 +13,9 @@
       </div>
     </router-link>
       <span>
-        <button @click="addToCart(module)" class="border-2 bg-blue-400 my-4 rounded-xl p-1 flex justify-center items-center space-x-4 px-2 hover:bg-blue-600">
+        <button @click="addToCart(module)" class="border-2 text-xs w-[100px] bg-blue-400 my-4 rounded-xl py-1 flex justify-center items-center space-x-2 px-2 hover:bg-blue-600">
           <i class="fa-solid fa-plus"></i>
-          <h2>
+          <h2 class="">
             Add to Cart
           </h2>
         </button>

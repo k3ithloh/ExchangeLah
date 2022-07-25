@@ -41,14 +41,36 @@
             <span class="font-medium text-lg md:text-xl">Course Outline</span>
             <p class="mt-4 text-justify text-sm text-gray-800 md:text-base">
               <a
-                :href="module.LinkToCourseOutline"
+                :href="module.linkToCourseOutline"
                 class="hover:text-blue-600 hover:underline"
-                >{{ module.LinkToCourseOutline }}</a
+                >{{ module.linkToCourseOutline }}</a
               >
             </p>
           </div>
         </div>
-        <div class="font-semibold md:text-2xl">Reviews</div>
+        <div class="">
+          <span class="font-semibold md:text-2xl ">Reviews</span>
+          <div class="flex flex-col my-8">
+            <span
+              v-for="review in reviews"
+              :key="review.reviewId"
+              class="rounded-xl p-2 flex flex-col space-x-4 pl-4 space-y-4"
+            >
+              <div>
+              <i class="fa-solid fa-user text-3xl"></i>
+                <div>
+                  <h4 class="font-semibold">Student Name</h4>
+                  <h6 class="text-xs">School Name</h6>
+                  <h6 class="text-xs">{{ review.timestamp }}</h6>
+                  <i v-for="index in review.rating" :key="index" class="fa-solid fa-star text-[#EDD36A] mr-1"></i>
+                </div>
+              </div>
+              <div>
+                {{ review.description }}
+              </div>
+            </span>
+          </div>
+        </div>
       </div>
       <div>
         <div class="bg-zinc-50 rounded-2xl text-center p-4 my-6">
@@ -117,6 +139,7 @@ export default {
   data() {
     return {
       module: [],
+      reviews: [],
     };
   },
   mounted() {
@@ -127,7 +150,13 @@ export default {
       )
       .then((response) => {
         this.module = response.data;
-        console.log(this.module);
+      });
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/review"
+      )
+      .then((response) => {
+        this.reviews = response.data;
       });
   },
   methods: {},

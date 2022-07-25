@@ -21,7 +21,7 @@
         >
         <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
         <i class="fa-solid fa-location-dot text-gray-400 ml-3"></i>
-        <span class="ml-2 text-sm text-gray-600">Tokyo, Japan</span>
+        <span class="ml-2 text-sm text-gray-600">{{ region }}, {{ country }}</span>
       </div>
 
       <div class="mt-4 h-full sm:grid sm:grid-cols-7 sm:grid-rows-3 sm:gap-5">
@@ -92,20 +92,27 @@
           <span class="pt-2 text-sm md:text-base font-normal">Insurance</span>
         </div>
       </div>
+      <span class="font-medium text-lg md:text-xl p-5">Application Information</span>
+      <div class="flex justify-around p-5 items-center">
+        <div class="flex flex-col items-center">
+          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">{{ university.noOfPlacesSem1 }}</h3>
+          <span class="pt-2 text-sm md:text-base font-normal">Sem 1 Vacancies</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <h3 class="font-medium text-[#648FB9] text-xl md:text-2xl">{{ university.noOfPlacesSem2 }}</h3>
+          <span class="pt-2 text-sm md:text-base font-normal">Sem 2 Vacancies</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <a :href="university.hostUniversityExchangeWebsite" class=" hover:text-black hover:underline">Go to University's Website</a>
+        </div>
+      </div>
     </div>
     <div class="card rounded-md bg-zinc-50 p-5 mx-auto w-full my-6">
       <span class="font-medium text-lg md:text-xl">Location</span>
       <div id="mapContainer" class="basemap h-96 my-5"></div>
       <span class="font-normal text-normal md:text-lg"
-        >Bunkyo City, Tokyo, Japan</span
+        >{{ region }}, {{ country }}</span
       >
-      <p class="mt-3 text-justify text-sm text-gray-800 md:text-base">
-        Tokyo University is located in a area called Bunkyo City. The area is
-        crowded and is surrounded with many facilities. The University of Tokyo
-        is composed of three campuses: Hongo, Komaba and Kashiwa. In addition,
-        some University of Tokyo facilities are situated in other parts of both
-        Tokyo and the country.
-      </p>
     </div>
   </div>
 </template>
@@ -116,27 +123,64 @@ import mapboxgl from "mapbox-gl";
 
 export default {
   name: "UniversityInfo",
+  props: ['university'],
   components: {},
   data() {
     return {
+      countryList: null,
+      regionList: null,
+      country: null,
+      region: null,
       university: "",
       accessToken:
         "pk.eyJ1IjoiYmVuamluZ2t0IiwiYSI6ImNrcHAzN2dhajA0Nm4ydW55bnk3ZjUzOWMifQ.UyhnflaD8sOuIdhbzEptKQ",
     };
   },
-  mounted() {
-    axios
+  async mounted() {
+    await axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"
+      )
+      .then((response) => {
+        this.regionList = response.data
+
+      });
+    await axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
+      )
+      .then((response) => {
+        this.countryList = response.data
+
+      });
+    await axios
       .get(
         "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/" + this.$route.params.name
       )
       .then((response) => {
         this.university = response.data
-        console.log(this.university)
-
+        this.getCountry();
+        this.getRegion();
       });
-    this.createMap();
+    await this.createMap();
   },
   methods: {
+    getCountry: function () {
+      console.log(this.university)
+      for (var i = 0; i < this.countryList.length; i++) {
+        if (this.countryList[i].countryId === this.university.countryId){
+          this.country = this.countryList[i].countryName
+        }
+      }
+
+    },
+    getRegion: function () {
+      for (var i = 0; i < this.regionList.length; i++) {
+        if (this.regionList[i].regionId === this.university.regionId){
+          this.region = this.regionList[i].regionName
+        }
+      }
+    },
     async createMap() {
       try {
         mapboxgl.accessToken = this.accessToken;

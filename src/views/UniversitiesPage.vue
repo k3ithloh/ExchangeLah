@@ -70,14 +70,12 @@
         </transition>
       </div>
     </div>
-    <!-- sorting not built yet -->
     <div class="bg-white">
       <div
         class="flex justify-between border-b-2 border-black sm:text-4xl font-semibold m-4 p-2 text-xl"
       >
         <h1>All Universities</h1>
       </div>
-      <!-- Add router link here or in the Card component? -->
       <div class="flex flex-wrap justify-center mt-4">
         <UniversityItem
           v-for="university in display"
@@ -144,7 +142,6 @@ export default {
         .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
         .then((response) => {
           this.universities = response.data;
-          this.pageCounter();
           this.displayPage();
         })
         .catch((error) => console.log(error.response));
@@ -175,7 +172,7 @@ export default {
       if (page === 1) {
         for (let i = page; i <= Math.min(page + 3, this.pageCount); i++) {
           numDisplay.push(i);
-        }
+        } 
       } else if (page >= this.pageCount - 1) {
         for (
           let i = Math.max(this.pageCount - 3, 1);
@@ -191,9 +188,9 @@ export default {
       }
       return numDisplay;
     },
-    pageCounter: function () {
+    pageCounter: function (list) {
       this.pageCount = Math.ceil(
-        Object.keys(this.universities).length / this.uniPerPage
+        Object.keys(list).length / this.uniPerPage
       );
     },
     displayPage: function (page) {
@@ -203,7 +200,6 @@ export default {
         for (let y = 0; y < this.selected.length; y++){
           tempList.push(this.selected[y].regionId)
         }
-        console.log(tempList)
         for (let x = 0; x < this.universities.length; x++){
           if (tempList.includes(this.universities[x].regionId)){
             finalList.push(this.universities[x])
@@ -225,8 +221,8 @@ export default {
           counter++;
         }
       }
+      this.pageCounter(finalList)
     },
-    // Find a better way to add abd remove filters without having to manually add in each filter to each function
     addToFilter: function (filter) {
       if (filter.category === "Location") {
         for (var x = 0; x < this.LocationFilters.length; x++) {
@@ -239,7 +235,6 @@ export default {
       }
       this.displayPage()
       this.displayPages()
-      this.pageCounter()
     },
     removeFilter: function (select) {
       for (var i = 0; i < this.selected.length; i++) {
@@ -255,7 +250,6 @@ export default {
       }
       this.displayPage()
       this.displayPages()
-      this.pageCounter()
     },
     clearFilter: function () {
       for (var i = 0; i < this.selected.length; i++) {
@@ -273,13 +267,13 @@ export default {
   },
   data() {
     return {
-      regionList: null,
-      display: "",
+      regionList: [],
+      display: [],
       currentPage: 1,
       uniPerPage: 8,
       pageCount: 1,
       isLocationOpen: false,
-      universities: null,
+      universities: [],
       LocationFilters: [],
       selected: [],
     };

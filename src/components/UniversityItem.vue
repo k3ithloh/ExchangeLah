@@ -47,7 +47,25 @@ export default {
       region: null,
     }
   },
-  updated() {
+  updated(){
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"
+      )
+      .then((response) => {
+        this.regionList = response.data
+        this.getRegion();
+      });
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
+      )
+      .then((response) => {
+        this.countryList = response.data
+        this.getCountry();
+      });
+  },
+  mounted() {
     axios
       .get(
         "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"

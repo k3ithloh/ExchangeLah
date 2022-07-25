@@ -21,7 +21,7 @@
         <div class="flex flex-col">
           <CartItem
             v-for="module in cart"
-            :key="module.id"
+            :key="module.basketId"
             :module="module"
             :cart="this.cart"
           />
@@ -42,7 +42,7 @@
     >
       <div>
         <h3 class="p-2">Choose Your University</h3>
-        <select v-model="selectedUniversity" @change="moduleSelectByUni()">
+        <select class="w-full" v-model="selectedUniversity" @change="moduleSelectByUni()">
           <option v-for="university in universityList" :key="university">
             {{ university.universityName }}
           </option>
@@ -88,7 +88,7 @@
           enter-active-class="duration-500 transform transition ease-in-out origin-top "
           enter-from-class="scale-y-0 opacity-0"
           enter-to-class="scale-y-100 opacity-100 "
-          leave-active-class="duration-200 transform transition ease-in-out origin-top"
+          leave-active-class="duration-200 transform ease-in-out origin-top"
           leave-from-class="scale-y-100 opacity-100"
           leave-to-class="scale-y-50 opacity-0"
         >
@@ -97,7 +97,7 @@
             class="flex flex-col transition-all duration-200 ease-in"
           >
             <span
-              v-for="basket in Baskets"
+              v-for="basket in basketFilters"
               :key="basket.id"
               class="bg-[#D5E2EE] text-[#89939E] rounded-xl w-auto m-2 px-3 py-1"
             >
@@ -135,7 +135,7 @@
         <div v-else class="w-full">
           <ModuleItem
             v-for="module in display"
-            :key="module.id"
+            :key="module.moduleId"
             :module="module"
             :cart="this.cart"
           />
@@ -158,7 +158,7 @@
           <div class="flex flex-col">
             <CartItem
               v-for="module in cart"
-              :key="module.id"
+              :key="module.moduleId"
               :module="module"
               :cart="this.cart"
             />
@@ -249,8 +249,17 @@ export default {
       .then((response) => {
         this.universityList = response.data;
       });
+    this.getBasket();
   },
   methods: {
+    getBasket: function() {
+      axios
+        .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/basket")
+        .then((response) => {
+          this.baskets = response.data;
+          this.createBasketFilter()
+        });
+    },
     moduleSearch: function () {
       if(this.moduleEntry !== ""){
         axios
@@ -309,12 +318,23 @@ export default {
       }
       return numDisplay;
     },
+    createBasketFilter: function () {
+      this.basketFilters = []
+      for (var i = 0; i < this.baskets.length; i++) {
+        var tempObj = {
+          id: this.baskets[i].basketId,
+          name: this.baskets[i].basketName,
+          checked: true,
+        };
+        this.basketFilters.push(tempObj);
+      }
+    },
     // Find a better way to add abd remove filters without having to manually add in each filter to each function
 
     addToFilter: function (filter) {
-      for (var i = 0; i < this.Baskets.length; i++) {
-        if (this.Baskets[i] === filter) {
-          this.Baskets.splice(i, 1);
+      for (var i = 0; i < this.basketFilters.length; i++) {
+        if (this.basketFilters[i] === filter) {
+          this.basketFilters.splice(i, 1);
           this.selected.push(filter);
           i--;
         }
@@ -324,21 +344,15 @@ export default {
       for (var i = 0; i < this.selected.length; i++) {
         if (this.selected[i] === select) {
           this.selected.splice(i, 1);
-          this.Baskets.push(select);
-          this.Baskets.sort((a, b) => {
+          this.basketFilters.push(select);
+          this.basketFilters.sort((a, b) => {
             return a.id - b.id;
           });
         }
       }
     },
     clearFilter: function () {
-      for (var i = 0; i < this.selected.length; i++) {
-        let item = this.selected[i];
-        this.Baskets.push(item);
-      }
-      this.Baskets.sort((a, b) => {
-        return a.id - b.id;
-      });
+      this.getBasket();
       this.selected = [];
     },
     clearCart: function () {
@@ -369,32 +383,8 @@ export default {
       isBasketOpen: false,
       moduleList: null,
       filteredList: [],
-      Baskets: [
-        {
-          id: 1,
-          name: "basket 1",
-          checked: true,
-          category: "Location",
-        },
-        {
-          id: 2,
-          name: "basket 2",
-          checked: true,
-          category: "Location",
-        },
-        {
-          id: 3,
-          name: "basket 3",
-          checked: true,
-          category: "Location",
-        },
-        {
-          id: 4,
-          name: "basket 4",
-          checked: true,
-          category: "Location",
-        },
-      ],
+      baskets: [],
+      basketFilters:[],
       selected: [],
     };
   },
