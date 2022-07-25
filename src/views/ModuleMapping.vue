@@ -42,7 +42,11 @@
     >
       <div>
         <h3 class="p-2">Choose Your University</h3>
-        <select class="w-full" v-model="selectedUniversity" @change="moduleSelectByUni()">
+        <select
+          class="w-full"
+          v-model="selectedUniversity"
+          @change="moduleSelectByUni()"
+        >
           <option v-for="university in universityList" :key="university">
             {{ university.universityName }}
           </option>
@@ -115,7 +119,7 @@
       </div>
     </div>
     <div class="grid md:grid-cols-[5fr_2fr] gap-4 rounded-xl">
-      <div class="m-4">
+      <div class="m-4 min-h-[430px]">
         <div
           class="flex justify-between border-b-2 border-black text-4xl font-semibold p-2"
         >
@@ -123,7 +127,13 @@
         </div>
         <div class="my-4">
           <span class="font-semibold">Search Module: </span>
-          <input v-model="moduleEntry" placeholder="Enter Module Name" type="text" class="w-2/3 rounded-xl mx-4 px-4" @input="moduleSearch">
+          <input
+            v-model="moduleEntry"
+            placeholder="Enter Module Name"
+            type="text"
+            class="w-2/3 rounded-xl mx-4 px-4"
+            @input="moduleSearch"
+          />
         </div>
         <div v-if="filteredList.length === 0">
           <h1
@@ -150,7 +160,7 @@
             <i class="fa-solid fa-cart-shopping"></i>
           </span>
         </div>
-        <div class="bg-white mb-4 rounded-xl hidden md:block">
+        <div class="bg-white mb-4 rounded-xl hidden md:block min-h-full">
           <div class="flex justify-between m-4">
             <h1 class="font-semibold">Module Cart</h1>
             <button @click="clearCart()">Clear</button>
@@ -169,19 +179,6 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             Search Module
           </button>
-        </div>
-        <div
-          class="bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px]"
-        >
-          <h1 class="font-semibold text-2xl text-center my-5 px-20">
-            Don't Know Which Modules to Choose?
-          </h1>
-          <router-link
-            to="#show-me"
-            class="bg-[#FAFAFA] rounded-lg py-3 px-4 mb-4 hover:bg-slate-400"
-          >
-            <span class="font-medium text-base">Show Me</span>
-          </router-link>
         </div>
       </div>
       <div class="flex justify-end pb-4 pr-4 text-xl">
@@ -212,7 +209,8 @@
         <button
           @click="
             this.currentPage = pageCount;
-            displayPage(this.currentPage);"
+            displayPage(this.currentPage);
+          "
         >
           <i class="fa-solid fa-angles-right"></i>
         </button>
@@ -233,9 +231,7 @@ export default {
     ModuleItem,
     CartItem,
   },
-  updated() {
-
-  },
+  updated() {},
   mounted() {
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module")
@@ -252,27 +248,30 @@ export default {
     this.getBasket();
   },
   methods: {
-    getBasket: function() {
+    getBasket: function () {
       axios
         .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/basket")
         .then((response) => {
           this.baskets = response.data;
-          this.createBasketFilter()
+          this.createBasketFilter();
         });
     },
     moduleSearch: function () {
-      if(this.moduleEntry !== ""){
+      if (this.moduleEntry !== "") {
         axios
-          .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" + this.moduleEntry)
+          .get(
+            "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" +
+              this.moduleEntry
+          )
           .then((response) => {
-            let data = response.data
-            let newDisplay = []
-            for(let i = 0; i < data.length; i++){
-              if(data[i].universityName === this.selectedUniversity){
-                newDisplay.push(data[i])
+            let data = response.data;
+            let newDisplay = [];
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].universityName === this.selectedUniversity) {
+                newDisplay.push(data[i]);
               }
             }
-            this.filteredList = newDisplay
+            this.filteredList = newDisplay;
             this.displayPage();
             this.pageCounter();
           });
@@ -319,7 +318,7 @@ export default {
       return numDisplay;
     },
     createBasketFilter: function () {
-      this.basketFilters = []
+      this.basketFilters = [];
       for (var i = 0; i < this.baskets.length; i++) {
         var tempObj = {
           id: this.baskets[i].basketId,
@@ -384,7 +383,7 @@ export default {
       moduleList: null,
       filteredList: [],
       baskets: [],
-      basketFilters:[],
+      basketFilters: [],
       selected: [],
     };
   },

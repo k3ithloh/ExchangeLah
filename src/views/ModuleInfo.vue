@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="">
-          <span class="font-semibold md:text-2xl ">Reviews</span>
+          <span class="font-semibold md:text-2xl">Reviews</span>
           <div class="flex flex-col my-8">
             <span
               v-for="review in reviews"
@@ -57,12 +57,16 @@
               class="rounded-xl p-2 flex flex-col space-x-4 pl-4 space-y-4"
             >
               <div>
-              <i class="fa-solid fa-user text-3xl"></i>
+                <i class="fa-solid fa-user text-3xl"></i>
                 <div>
                   <h4 class="font-semibold">Student Name</h4>
                   <h6 class="text-xs">School Name</h6>
                   <h6 class="text-xs">{{ review.timestamp }}</h6>
-                  <i v-for="index in review.rating" :key="index" class="fa-solid fa-star text-[#EDD36A] mr-1"></i>
+                  <i
+                    v-for="index in review.rating"
+                    :key="index"
+                    class="fa-solid fa-star text-[#EDD36A] mr-1"
+                  ></i>
                 </div>
               </div>
               <div>
@@ -152,9 +156,7 @@ export default {
         this.module = response.data;
       });
     axios
-      .get(
-        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/review"
-      )
+      .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/review")
       .then((response) => {
         this.reviews = response.data;
       });

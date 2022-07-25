@@ -22,8 +22,8 @@
         <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
         <i class="fa-solid fa-location-dot text-gray-400 ml-3"></i>
         <span class="ml-2 text-sm text-gray-600"
-          >{{ region }}, {{ country }}</span
-        >
+          >{{ region }}, {{ country }}
+        </span>
       </div>
 
       <div class="mt-4 h-full sm:grid sm:grid-cols-7 sm:grid-rows-3 sm:gap-5">
