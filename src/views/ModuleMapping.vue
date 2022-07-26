@@ -193,8 +193,8 @@
         >
           <i class="fa-solid fa-angles-left"></i>
         </button>
-        <div>
-          <div v-for="i in displayPages(this.currentPage)" :key="i">
+        <div class="flex">
+          <div class="" v-for="i in displayPages(this.currentPage)" :key="i">
             <button
               v-if="i === currentPage"
               @click="displayPage(i)"
@@ -276,6 +276,9 @@ export default {
             this.displayPage();
           })
           .catch((error) => console.log(error.response));
+      }
+      else{
+        this.moduleSelectByUni()
       }
     },
     pageCounter: function (list) {
