@@ -23,7 +23,7 @@
         No idea where to go?
       </h1>
       <router-link
-        to="#show-me"
+        :to="`/universityinfo/${nameOfUniversities[Math.floor(Math.random() * nameOfUniversities.length)]}`"
         class="bg-[#FAFAFA] hover:bg-slate-400 rounded-lg py-3 px-4"
       >
         <span class="font-medium text-base">Show Me</span>
@@ -35,7 +35,7 @@
       </h3>
       <div>
         <UniversityCard
-          v-for="university in universities.slice(0,4)"
+          v-for="university in universities.slice(0, 4)"
           :key="university.id"
           :university="university"
         />
@@ -54,6 +54,7 @@ export default {
   data() {
     return {
       universities: [],
+      nameOfUniversities: [],
     };
   },
   components: {
@@ -65,8 +66,11 @@ export default {
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
       .then((response) => {
         this.universities = response.data;
+        this.nameOfUniversities = response.data.map(
+          (element) => element.universityName
+        );
       })
-      .catch((error) => console.log(error.response));;
+      .catch((error) => console.log(error.response));
   },
 };
 </script>

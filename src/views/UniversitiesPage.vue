@@ -172,7 +172,7 @@ export default {
       if (page === 1) {
         for (let i = page; i <= Math.min(page + 3, this.pageCount); i++) {
           numDisplay.push(i);
-        } 
+        }
       } else if (page >= this.pageCount - 1) {
         for (
           let i = Math.max(this.pageCount - 3, 1);
@@ -189,25 +189,22 @@ export default {
       return numDisplay;
     },
     pageCounter: function (list) {
-      this.pageCount = Math.ceil(
-        Object.keys(list).length / this.uniPerPage
-      );
+      this.pageCount = Math.ceil(Object.keys(list).length / this.uniPerPage);
     },
     displayPage: function (page) {
-      let finalList = []
-      if (this.selected.length !== 0){
-        let tempList = []
-        for (let y = 0; y < this.selected.length; y++){
-          tempList.push(this.selected[y].regionId)
+      let finalList = [];
+      if (this.selected.length !== 0) {
+        let tempList = [];
+        for (let y = 0; y < this.selected.length; y++) {
+          tempList.push(this.selected[y].regionId);
         }
-        for (let x = 0; x < this.universities.length; x++){
-          if (tempList.includes(this.universities[x].regionId)){
-            finalList.push(this.universities[x])
+        for (let x = 0; x < this.universities.length; x++) {
+          if (tempList.includes(this.universities[x].regionId)) {
+            finalList.push(this.universities[x]);
           }
         }
-      }
-      else{
-        finalList = this.universities
+      } else {
+        finalList = this.universities;
       }
       this.currentPage = page ? page : 1;
       this.display = [];
@@ -221,7 +218,7 @@ export default {
           counter++;
         }
       }
-      this.pageCounter(finalList)
+      this.pageCounter(finalList);
     },
     addToFilter: function (filter) {
       if (filter.category === "Location") {
@@ -233,8 +230,8 @@ export default {
           }
         }
       }
-      this.displayPage()
-      this.displayPages()
+      this.displayPage();
+      this.displayPages();
     },
     removeFilter: function (select) {
       for (var i = 0; i < this.selected.length; i++) {
@@ -248,8 +245,8 @@ export default {
           }
         }
       }
-      this.displayPage()
-      this.displayPages()
+      this.displayPage();
+      this.displayPages();
     },
     clearFilter: function () {
       for (var i = 0; i < this.selected.length; i++) {
@@ -262,7 +259,7 @@ export default {
         return a.id - b.id;
       });
       this.selected = [];
-      this.displayPage()
+      this.displayPage();
     },
   },
   data() {
