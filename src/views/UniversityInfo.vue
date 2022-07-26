@@ -13,17 +13,21 @@
           <i class="fa-solid fa-star text-[#EDD36A] mr-1"></i>
         </div>
         <span class="text-xs text-gray-600">(4.5)</span>
-        <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
+        <div class="flex items-center">
+          <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
+        </div>
         <a
           class="ml-3 text-sm underline underline-offset-4 decoration-1 text-gray-600"
           href="#"
           >200 reviews</a
         >
-        <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
-        <i class="fa-solid fa-location-dot text-gray-400 ml-3"></i>
-        <span class="ml-2 text-sm text-gray-600"
+        <div class="flex items-center">
+          <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
+          <i class="fa-solid fa-location-dot text-gray-400 ml-3"></i>
+        </div>
+        <div class="ml-2 text-sm text-gray-600"
           >{{ region }}, {{ country }}
-        </span>
+        </div>
       </div>
 
       <div class="mt-4 h-full sm:grid sm:grid-cols-7 sm:grid-rows-3 sm:gap-5">
@@ -143,7 +147,7 @@
       <span class="font-medium text-lg md:text-xl">Location</span>
       <div id="mapContainer" class="basemap h-96 my-5"></div>
       <span class="font-normal text-normal md:text-lg"
-        >{{ region }}, {{ country }}</span
+        > {{ region }}, {{ country }} </span
       >
     </div>
   </div>
@@ -155,7 +159,7 @@ import mapboxgl from "mapbox-gl";
 
 export default {
   name: "UniversityInfo",
-  props: ["university"],
+  props: [],
   components: {},
   data() {
     return {
@@ -167,6 +171,10 @@ export default {
       accessToken:
         "pk.eyJ1IjoiYmVuamluZ2t0IiwiYSI6ImNrcHAzN2dhajA0Nm4ydW55bnk3ZjUzOWMifQ.UyhnflaD8sOuIdhbzEptKQ",
     };
+  },
+  updated () {
+    this.getCountry()
+    this.getRegion()
   },
   async mounted() {
     await axios

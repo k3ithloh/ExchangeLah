@@ -21,7 +21,7 @@
         <div class="flex flex-col">
           <CartItem
             v-for="module in cart"
-            :key="module.basketId"
+            :key="module.facultyId"
             :module="module"
             :cart="this.cart"
           />
@@ -42,11 +42,7 @@
     >
       <div>
         <h3 class="p-2">Choose Your University</h3>
-        <select
-          class="w-full"
-          v-model="selectedUniversity"
-          @change="moduleSelectByUni()"
-        >
+        <select class="w-full" v-model="selectedUniversity" @change="moduleSelectByUni()">
           <option v-for="university in universityList" :key="university">
             {{ university.universityName }}
           </option>
@@ -77,11 +73,11 @@
       <h3 class="font-semibold p-2">Refine Your Search</h3>
       <div class="p-2 flex flex-col">
         <button
-          @click="isBasketOpen = !isBasketOpen"
+          @click="isFacultyOpen = !isFacultyOpen"
           class="flex items-center space-x-4"
         >
-          <h6>Baskets</h6>
-          <span v-if="isBasketOpen">
+          <h6>Faculty</h6>
+          <span v-if="isFacultyOpen">
             <i class="fa-solid fa-angle-down"></i>
           </span>
           <span v-else>
@@ -97,21 +93,21 @@
           leave-to-class="scale-y-50 opacity-0"
         >
           <div
-            v-if="isBasketOpen"
+            v-if="isFacultyOpen"
             class="flex flex-col transition-all duration-200 ease-in"
           >
             <span
-              v-for="basket in basketFilters"
-              :key="basket.id"
+              v-for="faculty in facultyFilters"
+              :key="faculty.id"
               class="bg-[#D5E2EE] text-[#89939E] rounded-xl w-auto m-2 px-3 py-1"
             >
               <label class="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  @click="addToFilter(basket)"
+                  @click="addToFilter(faculty)"
                   class="ml-2"
                 />
-                <span>{{ basket.name }}</span>
+                <span>{{ faculty.name }}</span>
               </label>
             </span>
           </div>
@@ -119,7 +115,7 @@
       </div>
     </div>
     <div class="grid md:grid-cols-[5fr_2fr] gap-4 rounded-xl">
-      <div class="m-4 min-h-[430px]">
+      <div class="m-4">
         <div
           class="flex justify-between border-b-2 border-black text-4xl font-semibold p-2"
         >
@@ -127,13 +123,7 @@
         </div>
         <div class="my-4">
           <span class="font-semibold">Search Module: </span>
-          <input
-            v-model="moduleEntry"
-            placeholder="Enter Module Name"
-            type="text"
-            class="w-2/3 rounded-xl mx-4 px-4"
-            @input="moduleSearch"
-          />
+          <input v-model="moduleEntry" placeholder="Enter Module Name" type="text" class="w-2/3 rounded-xl mx-4 px-4" @input="moduleSearch">
         </div>
         <div v-if="filteredList.length === 0">
           <h1
@@ -160,7 +150,7 @@
             <i class="fa-solid fa-cart-shopping"></i>
           </span>
         </div>
-        <div class="bg-white mb-4 rounded-xl hidden md:block min-h-full">
+        <div class="bg-white mb-4 rounded-xl hidden md:block">
           <div class="flex justify-between m-4">
             <h1 class="font-semibold">Module Cart</h1>
             <button @click="clearCart()">Clear</button>
@@ -179,6 +169,19 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             Search Module
           </button>
+        </div>
+        <div
+          class="bg-[#D5E2EE] rounded-xl flex flex-col justify-center items-center min-h-[200px]"
+        >
+          <h1 class="font-semibold text-2xl text-center my-5 px-20">
+            Don't Know Which Modules to Choose?
+          </h1>
+          <router-link
+            to="#show-me"
+            class="bg-[#FAFAFA] rounded-lg py-3 px-4 mb-4 hover:bg-slate-400"
+          >
+            <span class="font-medium text-base">Show Me</span>
+          </router-link>
         </div>
       </div>
       <div class="flex justify-end pb-4 pr-4 text-xl">
@@ -209,8 +212,7 @@
         <button
           @click="
             this.currentPage = pageCount;
-            displayPage(this.currentPage);
-          "
+            displayPage(this.currentPage);"
         >
           <i class="fa-solid fa-angles-right"></i>
         </button>
@@ -231,70 +233,82 @@ export default {
     ModuleItem,
     CartItem,
   },
-  updated() {},
+  updated() {
+
+  },
   mounted() {
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module")
       .then((response) => {
         this.moduleList = response.data;
+        for( var i = 0; i < this.moduleList.length; i++){
+          if (!this.facultyList.includes(this.moduleList[i].faculty)){
+            this.facultyList.push(this.moduleList[i].faculty)
+          }
+        }
+        console.log(this.facultyList)
+        this.createFacultyFilter()
         this.displayPage();
-        this.pageCounter();
       });
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
       .then((response) => {
         this.universityList = response.data;
       });
-    this.getBasket();
   },
   methods: {
-    getBasket: function () {
-      axios
-        .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/basket")
-        .then((response) => {
-          this.baskets = response.data;
-          this.createBasketFilter();
-        });
-    },
     moduleSearch: function () {
-      if (this.moduleEntry !== "") {
+      if(this.moduleEntry !== ""){
         axios
-          .get(
-            "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" +
-              this.moduleEntry
-          )
+          .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" + this.moduleEntry)
           .then((response) => {
-            let data = response.data;
-            let newDisplay = [];
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].universityName === this.selectedUniversity) {
-                newDisplay.push(data[i]);
+            let data = response.data
+            let newDisplay = []
+            for(let i = 0; i < data.length; i++){
+              if(data[i].universityName === this.selectedUniversity){
+                newDisplay.push(data[i])
               }
             }
-            this.filteredList = newDisplay;
+            this.filteredList = newDisplay
             this.displayPage();
-            this.pageCounter();
           });
       }
     },
-    pageCounter: function () {
+    pageCounter: function (list) {
       this.pageCount = Math.ceil(
-        Object.keys(this.filteredList).length / this.modPerPage
+        Object.keys(list).length / this.modPerPage
       );
     },
     displayPage: function (page) {
+      let finalList = []
+      if (this.selected.length !== 0){
+        let tempList = []
+        for (let y = 0; y < this.selected.length; y++){
+          tempList.push(this.selected[y].name)
+        }
+        console.log(tempList)
+        for (let x = 0; x < this.filteredList.length; x++){
+          if (tempList.includes(this.filteredList[x].faculty)){
+            finalList.push(this.filteredList[x])
+          }
+        }
+      }
+      else{
+        finalList = this.filteredList
+      }
       this.currentPage = page ? page : 1;
       this.display = [];
       let counter = 1;
       let loopStart = this.modPerPage * this.currentPage - this.modPerPage + 1;
-      let keys = Object.keys(this.filteredList);
-      for (let i = 1; i <= Object.keys(this.filteredList).length; i++) {
+      let keys = Object.keys(finalList);
+      for (let i = 1; i <= Object.keys(finalList).length; i++) {
         if (i === loopStart && counter <= this.modPerPage) {
-          this.display.push(this.filteredList[keys[i - 1]]);
+          this.display.push(finalList[keys[i - 1]]);
           loopStart++;
           counter++;
         }
       }
+      this.pageCounter(finalList)
     },
     displayPages: function (page) {
       let numDisplay = [];
@@ -317,41 +331,47 @@ export default {
       }
       return numDisplay;
     },
-    createBasketFilter: function () {
-      this.basketFilters = [];
-      for (var i = 0; i < this.baskets.length; i++) {
+    createFacultyFilter: function () {
+      this.facultyFilters = []
+      for (var i = 0; i < this.facultyList.length; i++) {
         var tempObj = {
-          id: this.baskets[i].basketId,
-          name: this.baskets[i].basketName,
+          id: i,
+          name: this.facultyList[i],
           checked: true,
         };
-        this.basketFilters.push(tempObj);
+        this.facultyFilters.push(tempObj);
       }
     },
     // Find a better way to add abd remove filters without having to manually add in each filter to each function
 
     addToFilter: function (filter) {
-      for (var i = 0; i < this.basketFilters.length; i++) {
-        if (this.basketFilters[i] === filter) {
-          this.basketFilters.splice(i, 1);
+      for (var i = 0; i < this.facultyFilters.length; i++) {
+        if (this.facultyFilters[i] === filter) {
+          this.facultyFilters.splice(i, 1);
           this.selected.push(filter);
           i--;
         }
       }
+      this.moduleEntry = ""
+      this.moduleSelectByUni()
+      this.displayPages()
     },
     removeFilter: function (select) {
       for (var i = 0; i < this.selected.length; i++) {
         if (this.selected[i] === select) {
           this.selected.splice(i, 1);
-          this.basketFilters.push(select);
-          this.basketFilters.sort((a, b) => {
+          this.facultyFilters.push(select);
+          this.facultyFilters.sort((a, b) => {
             return a.id - b.id;
           });
         }
       }
+      this.moduleEntry = ""
+      this.moduleSelectByUni()
+      this.displayPages()
     },
     clearFilter: function () {
-      this.getBasket();
+      this.createFacultyFilter();
       this.selected = [];
     },
     clearCart: function () {
@@ -364,8 +384,8 @@ export default {
           this.filteredList.push(this.moduleList[i]);
         }
       }
+      this.moduleEntry = ""
       this.displayPage();
-      this.pageCounter();
     },
   },
   data() {
@@ -379,11 +399,11 @@ export default {
       selectedUniversity: null,
       showFilter: false,
       cart: [],
-      isBasketOpen: false,
+      isFacultyOpen: false,
       moduleList: null,
       filteredList: [],
-      baskets: [],
-      basketFilters: [],
+      facultyList: [],
+      facultyFilters:[],
       selected: [],
     };
   },
