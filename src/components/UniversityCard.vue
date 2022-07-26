@@ -2,15 +2,15 @@
   <div
     class="flex items-center justify-between border-2 border-slate-200 rounded-lg my-4 mx-5 py-3"
   >
-    <div class="flex justify-center items-center">
-      <div class="w-1/3">
+    <div class="flex items-center">
+      <div class="">
         <img
           :src="university.icon"
-          class="h-12 w-12 mx-2"
+          class="h-12 w-24 mx-2"
         />
       </div>
       <div class="flex flex-col">
-        <h5 class="text-sm font-semibold mb-1 line-clamp-2">
+        <h5 class="text-sm font-semibold mb-1 line-clamp-2 ">
           {{ university.universityName }}
         </h5>
         <span class="text-xs font-regular text-gray-400"
@@ -48,7 +48,8 @@ export default {
       .then((response) => {
         this.regionList = response.data
         this.getRegion();
-      });
+      })
+      .catch((error) => console.log(error.response));;
     axios
       .get(
         "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
@@ -56,7 +57,8 @@ export default {
       .then((response) => {
         this.countryList = response.data
         this.getCountry();
-      });
+      })
+      .catch((error) => console.log(error.response));;
   },
   methods: {
     getCountry: function () {

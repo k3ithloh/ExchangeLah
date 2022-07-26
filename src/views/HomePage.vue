@@ -10,7 +10,7 @@
       </h1>
       <div class="flex flex-wrap justify-center">
         <UniversityItem
-          v-for="university in universities"
+          v-for="university in universities.slice(0, 8)"
           :key="university.universityName"
           :university="university"
         />
@@ -23,7 +23,7 @@
         No idea where to go?
       </h1>
       <router-link
-        to="#show-me"
+        :to="`/universityinfo/${nameOfUniversities[Math.floor(Math.random() * nameOfUniversities.length)]}`"
         class="bg-[#FAFAFA] hover:bg-slate-400 rounded-lg py-3 px-4"
       >
         <span class="font-medium text-base">Show Me</span>
@@ -35,7 +35,7 @@
       </h3>
       <div>
         <UniversityCard
-          v-for="university in universities"
+          v-for="university in universities.slice(0, 4)"
           :key="university.id"
           :university="university"
         />
@@ -53,19 +53,24 @@ export default {
   name: "HomePage",
   data() {
     return {
-      universities: null,
+      universities: [],
+      nameOfUniversities: [],
     };
   },
   components: {
     UniversityItem,
     UniversityCard,
   },
-  mounted() {
+  created() {
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
       .then((response) => {
         this.universities = response.data;
-      });
+        this.nameOfUniversities = response.data.map(
+          (element) => element.universityName
+        );
+      })
+      .catch((error) => console.log(error.response));
   },
 };
 </script>

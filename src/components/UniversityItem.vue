@@ -3,7 +3,7 @@
     class="flex justify-center flex-col mb-5 mx-5 min-w-[200px] w-1/3 sm:w-1/5 h-full"
   >
     <img
-      src="../assets/img/tokyo_university.jpeg"
+      :src="university.img1"
       alt="Tokyo University"
       class="h-40 w-full rounded-md mb-2"
     />
@@ -47,6 +47,26 @@ export default {
       region: null,
     }
   },
+  updated(){
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region"
+      )
+      .then((response) => {
+        this.regionList = response.data
+        this.getRegion();
+      })
+      .catch((error) => console.log(error.response));;
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
+      )
+      .then((response) => {
+        this.countryList = response.data
+        this.getCountry();
+      })
+      .catch((error) => console.log(error.response));;
+  },
   mounted() {
     axios
       .get(
@@ -55,7 +75,8 @@ export default {
       .then((response) => {
         this.regionList = response.data
         this.getRegion();
-      });
+      })
+      .catch((error) => console.log(error.response));;
     axios
       .get(
         "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
@@ -63,7 +84,8 @@ export default {
       .then((response) => {
         this.countryList = response.data
         this.getCountry();
-      });
+      })
+      .catch((error) => console.log(error.response));;
   },
   methods: {
     getCountry: function () {

@@ -86,31 +86,36 @@
     <form
       class="flex flex-col"
     >
-      <div class="flex justify-center items-center border border-slate-300 rounded-md shadow-md focus:outline-none md:text-md mb-4">
-        <span class="left-0 items-center ml-3 h-fit">
-          <i class="fa-solid h-4 w-4 fa-magnifying-glass text-[#2D3D8F]"></i>
-        </span>
-        <input
-          class="placeholder:italic placeholder:text-slate-400 block bg-slate-100 w-72 sm:w-80 md:w-80 lg:w-96 py-3 pl-5 pr-5 outline-none"
-          placeholder="Search university..."
-          v-model="searchUni"
-          @input="search"
-          type="text"
-          name="search"
-        />
-        <button type="reset" class="right-0 flex items-center mr-3 h-fit" @click="searchList = []">
-          <i class="fa-solid fa-xmark h-4 w-4 text-[#2D3D8F]"></i>
-        </button>
+      <div class="flex flex-col">
+        <div class="flex justify-center items-center border focus-within:bg-slate-300 hover:bg-slate-300 border-slate-300 rounded-md shadow-md focus:outline-none md:text-md">
+          <span class="left-0 items-center ml-3 h-fit">
+            <i class="fa-solid h-4 w-4 fa-magnifying-glass text-[#2D3D8F]"></i>
+          </span>
+          <input
+            class="placeholder:italic bg-transparent placeholder:text-slate-400 blockw-72 sm:w-80 md:w-80 lg:w-96 py-3 pl-5 pr-5 outline-none"
+            placeholder="Search university..."
+            v-model="searchUni"
+            @input="search"
+            type="text"
+            name="search"
+          />
+          <button type="reset" class="right-0 flex items-center mr-3 h-fit" @click="searchList = []">
+            <i class="fa-solid fa-xmark h-4 w-4 text-[#2D3D8F]"></i>
+          </button>
         </div>
-      <div class="w-full bg-gray-500">
-        <div class="fixed bg-white ">
-          <div v-for="(university,i) in searchList" :key="i" class="flex p-2 border-b-2 border-black">
-            <!-- Cannot use Router link here because page does not refresh -->
-            <a :href="`/universityinfo/${university.universityName}`" @click="searchList = []; searchUni=''">
-              <img :src="university.icon" class="h-10 w-10">
-              <span>{{ university.universityName }}</span>
-            </a>
-          </div>
+        <div class="relative bg-slate-200 w-full">
+            <div class="absolute px-2 w-full">
+              <!-- Cannot use Router link here because page does not refresh -->
+              <div v-for="(university,i) in searchList.slice(0,4)"
+                :key="i" class="flex flex-col border-b-2 border-black bg-slate-300 min-h-30 p-2">
+                <a :href="`/universityinfo/${university.universityName}`"
+                @click="searchList = []; searchUni=''"
+                class="flex items-center space-x-2">
+                  <img :src="university.icon" class="h-10 w-10">
+                  <span>{{ university.universityName }}</span>
+                </a>
+              </div>
+            </div>
         </div>
       </div>
     </form>
@@ -192,8 +197,8 @@ export default {
                 this.searchList.push(data[i])
               }
             }
-            console.log(this.searchList)
-          });
+          })
+          .catch((error) => console.log(error.response));;
       }
       else{
         this.searchList = []
