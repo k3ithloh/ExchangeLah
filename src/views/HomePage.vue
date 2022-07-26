@@ -65,7 +65,8 @@ export default {
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
       .then((response) => {
         this.universities = response.data;
-      });
+      })
+      .catch((error) => console.log(error.response));;
   },
 };
 </script>

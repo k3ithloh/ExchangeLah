@@ -48,7 +48,8 @@ export default {
       .then((response) => {
         this.regionList = response.data
         this.getRegion();
-      });
+      })
+      .catch((error) => console.log(error.response));;
     axios
       .get(
         "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country"
@@ -56,7 +57,8 @@ export default {
       .then((response) => {
         this.countryList = response.data
         this.getCountry();
-      });
+      })
+      .catch((error) => console.log(error.response));;
   },
   methods: {
     getCountry: function () {

@@ -193,21 +193,23 @@
         >
           <i class="fa-solid fa-angles-left"></i>
         </button>
-        <div v-for="i in displayPages(this.currentPage)" :key="i">
-          <button
-            v-if="i === currentPage"
-            @click="displayPage(i)"
-            class="border-2 mx-1 px-2 rounded-2xl bg-blue-500"
-          >
-            {{ i }}
-          </button>
-          <button
-            v-else
-            @click="displayPage(i)"
-            class="border-2 mx-1 px-2 rounded-2xl bg-blue-300"
-          >
-            {{ i }}
-          </button>
+        <div>
+          <div v-for="i in displayPages(this.currentPage)" :key="i">
+            <button
+              v-if="i === currentPage"
+              @click="displayPage(i)"
+              class="border-2 mx-1 px-2 rounded-2xl bg-blue-500"
+            >
+              {{ i }}
+            </button>
+            <button
+              v-else
+              @click="displayPage(i)"
+              class="border-2 mx-1 px-2 rounded-2xl bg-blue-300"
+            >
+              {{ i }}
+            </button>
+          </div>
         </div>
         <button
           @click="
@@ -246,15 +248,16 @@ export default {
             this.facultyList.push(this.moduleList[i].faculty)
           }
         }
-        console.log(this.facultyList)
         this.createFacultyFilter()
         this.displayPage();
-      });
+      })
+      .catch((error) => console.log(error.response));
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university")
       .then((response) => {
         this.universityList = response.data;
-      });
+      })
+      .catch((error) => console.log(error.response));
   },
   methods: {
     moduleSearch: function () {
@@ -271,7 +274,8 @@ export default {
             }
             this.filteredList = newDisplay
             this.displayPage();
-          });
+          })
+          .catch((error) => console.log(error.response));
       }
     },
     pageCounter: function (list) {
@@ -286,7 +290,7 @@ export default {
         for (let y = 0; y < this.selected.length; y++){
           tempList.push(this.selected[y].name)
         }
-        console.log(tempList)
+
         for (let x = 0; x < this.filteredList.length; x++){
           if (tempList.includes(this.filteredList[x].faculty)){
             finalList.push(this.filteredList[x])
@@ -395,12 +399,12 @@ export default {
       currentPage: 1,
       modPerPage: 30,
       pageCount: 1,
-      universityList: null,
-      selectedUniversity: null,
+      universityList: [],
+      selectedUniversity: [],
       showFilter: false,
       cart: [],
       isFacultyOpen: false,
-      moduleList: null,
+      moduleList: [],
       filteredList: [],
       facultyList: [],
       facultyFilters:[],

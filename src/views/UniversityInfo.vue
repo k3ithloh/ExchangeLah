@@ -181,12 +181,14 @@ export default {
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region")
       .then((response) => {
         this.regionList = response.data;
-      });
+      })
+      .catch((error) => console.log(error.response));;
     await axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/country")
       .then((response) => {
         this.countryList = response.data;
-      });
+      })
+      .catch((error) => console.log(error.response));
     await axios
       .get(
         "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/" +
@@ -196,12 +198,12 @@ export default {
         this.university = response.data;
         this.getCountry();
         this.getRegion();
-      });
+      })
+      .catch((error) => console.log(error.response));;
     await this.createMap();
   },
   methods: {
     getCountry: function () {
-      console.log(this.university);
       for (var i = 0; i < this.countryList.length; i++) {
         if (this.countryList[i].countryId === this.university.countryId) {
           this.country = this.countryList[i].countryName;

@@ -197,7 +197,8 @@ export default {
                 this.searchList.push(data[i])
               }
             }
-          });
+          })
+          .catch((error) => console.log(error.response));;
       }
       else{
         this.searchList = []

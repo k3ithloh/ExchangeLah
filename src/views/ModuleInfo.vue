@@ -154,12 +154,14 @@ export default {
       )
       .then((response) => {
         this.module = response.data;
-      });
+      })
+      .catch((error) => console.log(error.response));
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/review")
       .then((response) => {
         this.reviews = response.data;
-      });
+      })
+      .catch((error) => console.log(error.response));;
   },
   methods: {},
 };
