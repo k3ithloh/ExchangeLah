@@ -108,12 +108,21 @@
               <!-- Cannot use Router link here because page does not refresh -->
               <div v-for="(university,i) in searchList.slice(0,4)"
                 :key="i" class="flex flex-col border-b-2 border-black bg-slate-300 min-h-30 p-2">
-                <a :href="`/universityinfo/${university.universityName}`"
+
+                <router-link
+                  :to="`/universityinfo/${university.universityName}`"
+                  @click="searchList = []; searchUni=''"
+                  class="flex items-center space-x-2">
+                  <img :src="university.icon" class="h-10 w-10">
+                  <span>{{ university.universityName }}</span>
+                </router-link>
+
+                <!-- <a :href="`/universityinfo/${university.universityName}`"
                 @click="searchList = []; searchUni=''"
                 class="flex items-center space-x-2">
                   <img :src="university.icon" class="h-10 w-10">
                   <span>{{ university.universityName }}</span>
-                </a>
+                </a> -->
               </div>
             </div>
         </div>

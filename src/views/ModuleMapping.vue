@@ -28,9 +28,10 @@
         </div>
         <button
           class="float-left bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4"
+          @click="showFilter = !showFilter; displayModules();"
         >
           <i class="fa-solid fa-magnifying-glass"></i>
-          Search University
+          Search Module
         </button>
       </div>
     </div>
@@ -176,7 +177,7 @@
           </div>
           <button
             class="float-right bottom-0 bg-blue-200 rounded-2xl hover:bg-blue-400 p-1 m-4"
-            @click="displayModules()"
+            @click="displayModules(); "
           >
             <i class="fa-solid fa-magnifying-glass"></i>
             Search Module
@@ -235,7 +236,6 @@ export default {
     ModuleItem,
     CartItem,
   },
-  updated() {},
   mounted() {
     axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module")
