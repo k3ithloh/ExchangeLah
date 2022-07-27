@@ -6,8 +6,11 @@
         <h4 class="font-semibold text-base mb-1 line-clamp-2">
             {{ module.moduleName }}
         </h4>
+        <h4 class="font-semibold mb-1 line-clamp-2">
+            ({{ module.moduleId }})
+        </h4>
         <h4 class=" mb-1 line-clamp-2">
-            {{ module.moduleId }}
+            {{ module.universityName }}
         </h4>
     </div>
     <span>

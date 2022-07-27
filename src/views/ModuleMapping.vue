@@ -181,7 +181,6 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             Search Module
           </button>
-          {{ cartBasketIds }}
         </div>
       </div>
       <div class="flex justify-end pb-4 pr-4 text-xl">
@@ -260,26 +259,47 @@ export default {
   },
   methods: {
     moduleSearch: function () {
-      if (this.moduleEntry !== "") {
-        axios
-          .get(
-            "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" +
-              this.moduleEntry
-          )
-          .then((response) => {
-            let data = response.data;
-            let newDisplay = [];
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].universityName === this.selectedUniversity) {
-                newDisplay.push(data[i]);
-              }
+      if (this.cartBasketIds.length !== 0){
+        if (this.moduleEntry === "") {
+          this.displayModules()
+          this.displayPage()
+        }
+        else{
+          this.displayModules()
+          let newDisplay = [];
+          for (let i = 0; i < this.filteredList.length; i++) {
+            if (this.filteredList[i].moduleName.toLowerCase().includes(this.moduleEntry.toLowerCase())) {
+              newDisplay.push(this.filteredList[i])
             }
-            this.filteredList = newDisplay;
-            this.displayPage();
-          })
-          .catch((error) => console.log(error.response));
-      } else {
-        this.moduleSelectByUni();
+          }
+          console.log(newDisplay)
+          this.filteredList = newDisplay;
+          this.displayPage();
+        }
+      }
+      if (this.cartBasketIds.length === 0){
+        if (this.moduleEntry === "") {
+          this.moduleSelectByUni();
+        }
+        else{
+          axios
+            .get(
+              "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/module/search/" +
+                this.moduleEntry
+            )
+            .then((response) => {
+              let data = response.data;
+              let newDisplay = [];
+              for (let i = 0; i < data.length; i++) {
+                if (data[i].universityName === this.selectedUniversity) {
+                  newDisplay.push(data[i]);
+                }
+              }
+              this.filteredList = newDisplay;
+              this.displayPage();
+            })
+            .catch((error) => console.log(error.response));
+        }
       }
     },
     pageCounter: function (list) {
@@ -397,9 +417,10 @@ export default {
       this.cartBasketIds = this.cart.map((element) => {
         return element.basketModules[0].basketId;
       });
-      this.display = this.moduleList.filter((element) => {
+      this.filteredList = this.moduleList.filter((element) => {
         return this.cartBasketIds.includes(element.basketModules[0].basketId);
       });
+      this.displayPage()
     },
   },
   data() {
