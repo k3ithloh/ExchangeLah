@@ -176,6 +176,20 @@ export default {
     this.getCountry()
     this.getRegion()
   },
+  beforeRouteUpdate(to, from, next){
+    axios
+      .get(
+        "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/university/" +
+          to.params.name
+      )
+      .then((response) => {
+        console.log(response.data)
+        this.university = response.data;
+        this.getCountry();
+        this.getRegion();
+      })
+      .catch((error) => console.log(error.response));;
+  },
   async mounted() {
     await axios
       .get("http://caifan.ap-southeast-1.elasticbeanstalk.com/api/region")

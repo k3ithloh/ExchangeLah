@@ -110,12 +110,12 @@
                 :key="i" class="flex flex-col border-b-2 border-black bg-slate-300 min-h-30 p-2">
 
                 <router-link
-        :to="`/universityinfo/${university.universityName}`"
-                @click="searchList = []; searchUni=''"
-                class="flex items-center space-x-2">
+                  :to="`/universityinfo/${university.universityName}`"
+                  @click="searchList = []; searchUni=''"
+                  class="flex items-center space-x-2">
                   <img :src="university.icon" class="h-10 w-10">
                   <span>{{ university.universityName }}</span>
-      </router-link>
+                </router-link>
 
                 <!-- <a :href="`/universityinfo/${university.universityName}`"
                 @click="searchList = []; searchUni=''"
