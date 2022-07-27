@@ -150,6 +150,7 @@
         > {{ region }}, {{ country }} </span
       >
     </div>
+    {{university}}
   </div>
 </template>
 
@@ -235,12 +236,23 @@ export default {
       try {
         mapboxgl.accessToken = this.accessToken;
 
-        const map = new mapboxgl.Map({
-          container: "mapContainer",
-          style: "mapbox://styles/benjingkt/cl5guz59t000014mvy1q9lcy2",
-          center: [139.6503, 35.6762],
-          zoom: 12,
-        });
+        let map = null;
+
+        if (this.university.longitude && this.university.latitude) {
+          map = new mapboxgl.Map({
+            container: "mapContainer",
+            style: "mapbox://styles/benjingkt/cl5guz59t000014mvy1q9lcy2",
+            center: [this.university.longitude, this.university.latitude],
+            zoom: 12,
+          });
+        } else {
+          map = new mapboxgl.Map({
+            container: "mapContainer",
+            style: "mapbox://styles/benjingkt/cl5guz59t000014mvy1q9lcy2",
+            center: [103.8198, 1.3521],
+            zoom: 12,
+          });
+        }
 
         map.on("load", () => {});
       } catch (err) {
