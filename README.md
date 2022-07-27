@@ -1,5 +1,7 @@
 # ExchangeLah Frontend
 
+Live @ http://exchangelah.s3-website-ap-southeast-1.amazonaws.com/
+
 ## Requirement
 
 - Node 16.15.0
