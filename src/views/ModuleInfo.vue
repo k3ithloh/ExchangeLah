@@ -23,6 +23,11 @@
           <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
           <i class="fa-solid fa-basket-shopping text-gray-400 ml-3"></i>
         </div>
+        <span class="ml-2 text-sm text-gray-600">{{ basket.basketName }}</span>
+        <div class="items-center flex">
+          <i class="fa-solid fa-circle text-gray-400 ml-3 h-1"></i>
+          <i class="fa-solid fa-school text-gray-400 ml-3"></i>
+        </div>
         <span class="ml-2 text-sm text-gray-600">{{ module.faculty }}</span>
       </div>
     </div>
@@ -144,6 +149,7 @@ export default {
     return {
       module: [],
       reviews: [],
+      basket: [],
     };
   },
   mounted() {
@@ -154,6 +160,7 @@ export default {
       )
       .then((response) => {
         this.module = response.data;
+        this.getBasket()
       })
       .catch((error) => console.log(error.response));
     axios
@@ -163,7 +170,19 @@ export default {
       })
       .catch((error) => console.log(error.response));;
   },
-  methods: {},
+  methods: {
+    getBasket: function () {
+      axios
+        .get(
+          "http://caifan.ap-southeast-1.elasticbeanstalk.com/api/basket/" +
+            this.module.basketModules[0].basketId
+        )
+        .then((response) => {
+          this.basket = response.data;
+        })
+        .catch((error) => console.log(error.response));
+    }
+  },
 };
 </script>
 
