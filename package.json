@@ -6,7 +6,8 @@
     "build": "vite build",
     "preview": "vite preview --port 5050",
     "build:tailwind": "npx tailwindcss -o build.css --minify",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "deploy": "aws --region ap-southeast-1 --profile vue-deployer s3 sync ./dist s3://exchangelah --delete"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
