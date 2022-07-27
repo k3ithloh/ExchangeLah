@@ -150,7 +150,6 @@
         > {{ region }}, {{ country }} </span
       >
     </div>
-    {{university}}
   </div>
 </template>
 
