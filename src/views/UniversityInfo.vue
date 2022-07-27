@@ -253,7 +253,7 @@ export default {
           });
         }
 
-        map.on("load", () => {});
+        await map.on("load", () => {});
       } catch (err) {
         console.log("map error", err);
       }
