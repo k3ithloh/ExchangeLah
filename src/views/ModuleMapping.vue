@@ -140,7 +140,7 @@
           <h1
             class="text-2xl font font-semibold flex p-4 border-4 justify-center"
           >
-            Please select an University to begin
+            Please select a University to begin
           </h1>
         </div>
         <div v-else class="w-full">
