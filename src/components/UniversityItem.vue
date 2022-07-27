@@ -4,7 +4,7 @@
   >
     <img
       :src="university.img1"
-      alt="Tokyo University"
+      alt="University Photo"
       class="h-40 w-full rounded-md mb-2"
     />
     <router-link :to="`/universityinfo/${university.universityName}`">
